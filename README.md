@@ -1,3 +1,3 @@
 # Andriod-Final-Project
 
-# Team Member: Yinglei Fang
+# Team Member: Yinglei Fang, Bryce Richardson (bdr2254)

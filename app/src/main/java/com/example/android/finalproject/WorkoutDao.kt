@@ -36,12 +36,12 @@ interface WorkoutDao {
 
     // The flow always holds/caches latest version of data. Notifies its observers when the
     // data has changed.
-    @Query("SELECT * FROM word_table ORDER BY word ASC")
+    @Query("SELECT * FROM workout_table ORDER BY id ASC")
     fun getAlphabetizedWords(): Flow<List<Workout>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(workout: Workout)
 
-    @Query("DELETE FROM word_table")
+    @Query("DELETE FROM workout_table")
     suspend fun deleteAll()
 }

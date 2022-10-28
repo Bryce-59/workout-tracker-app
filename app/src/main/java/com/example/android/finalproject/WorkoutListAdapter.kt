@@ -33,7 +33,7 @@ class WordListAdapter : ListAdapter<Workout, WordViewHolder>(WORDS_COMPARATOR) {
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val current = getItem(position)
-        holder.bind(current.word)
+        holder.bind(current.workoutName + ", " + current.startTime + ", " + current.endTime)
     }
 
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -59,7 +59,7 @@ class WordListAdapter : ListAdapter<Workout, WordViewHolder>(WORDS_COMPARATOR) {
             }
 
             override fun areContentsTheSame(oldItem: Workout, newItem: Workout): Boolean {
-                return oldItem.word == newItem.word
+                return oldItem.id == newItem.id
             }
         }
     }

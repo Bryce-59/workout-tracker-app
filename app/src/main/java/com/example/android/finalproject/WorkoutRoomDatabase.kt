@@ -29,7 +29,7 @@ import kotlinx.coroutines.launch
  * This is the backend. The database. This used to be done by the OpenHelper.
  * The fact that this has very few comments emphasizes its coolness.
  */
-@Database(entities = [Workout::class], version = 1)
+@Database(entities = [Workout::class], version = 2)
 abstract class WorkoutRoomDatabase : RoomDatabase() {
 
     abstract fun wordDao(): WorkoutDao
@@ -87,11 +87,6 @@ abstract class WorkoutRoomDatabase : RoomDatabase() {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
             workoutDao.deleteAll()
-
-            var workout = Workout("Hello")
-            workoutDao.insert(workout)
-            workout = Workout("World!")
-            workoutDao.insert(workout)
         }
     }
 }

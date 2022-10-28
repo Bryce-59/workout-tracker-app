@@ -15,28 +15,58 @@ See the License for the specific language governing permissions and
 limitations under the License. -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_word"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/min_height"
+        android:text="Type In Workout Name" />
+
+    <EditText
+        android:id="@+id/workout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_padding"
         android:fontFamily="sans-serif-light"
         android:hint="@string/hint_word"
         android:inputType="textAutoComplete"
-        android:layout_margin="@dimen/big_padding"
+        android:minHeight="@dimen/min_height"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="Select Start Time" />
+
+    <TimePicker
+        android:id="@+id/startTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select End TIme" />
+
+    <TimePicker
+        android:id="@+id/endTimePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner" />
 
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_padding"
         android:background="@color/colorPrimary"
         android:text="@string/button_save"
-        android:layout_margin="@dimen/big_padding"
         android:textColor="@color/buttonLabel" />
 
 </LinearLayout>

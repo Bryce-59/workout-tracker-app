@@ -31,5 +31,12 @@ import androidx.room.PrimaryKey
  * https://developer.android.com/topic/libraries/architecture/room.html
  */
 
-@Entity(tableName = "word_table")
-data class Workout(@PrimaryKey @ColumnInfo(name = "word") val word: String)
+@Entity(tableName = "workout_table")
+data class Workout(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int,
+    val workoutName: String,
+    val startTime: String,
+    val endTime: String
+)
+

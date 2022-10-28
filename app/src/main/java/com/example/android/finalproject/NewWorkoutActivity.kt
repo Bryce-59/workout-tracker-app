@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -33,16 +34,23 @@ class NewWorkoutActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_word)
-        val editWordView = findViewById<EditText>(R.id.edit_word)
+        val workoutName = findViewById<EditText>(R.id.workout_name)
+        val startTime = findViewById<TimePicker>(R.id.startTimePicker)
+        val endTime = findViewById<TimePicker>(R.id.endTimePicker)
+
 
         val button = findViewById<Button>(R.id.button_save)
         button.setOnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editWordView.text)) {
+            if (TextUtils.isEmpty(workoutName.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
-                val word = editWordView.text.toString()
-                replyIntent.putExtra(EXTRA_REPLY, word)
+                val workout = workoutName.text.toString()
+                val startTimeStr = startTime.hour.toString() + ":" + startTime.minute.toString()
+                val endTimeStr = endTime.hour.toString() + ":" + endTime.minute.toString()
+
+                var workoutInfo = arrayOf(workout, startTimeStr, endTimeStr)
+                replyIntent.putExtra(EXTRA_REPLY, workoutInfo)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()
@@ -50,6 +58,6 @@ class NewWorkoutActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_REPLY = "com.example.android.wordlistsql.REPLY"
+        const val EXTRA_REPLY = "com.example.android.workoutListsql.REPLY"
     }
 }

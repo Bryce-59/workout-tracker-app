@@ -19,6 +19,7 @@ package com.example.android.finalproject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,7 @@ import com.example.android.finalproject.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private val newWordActivityRequestCode = 1
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = WordListAdapter()
+        val adapter = WordListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -97,5 +98,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        Log.d("myTag", "ybybyby")
+        val intent = Intent(this@MainActivity, NewWorkoutActivity::class.java)
+        startActivityForResult(intent, newWordActivityRequestCode)
     }
 }

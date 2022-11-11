@@ -38,5 +38,6 @@ data class Workout(
     val workoutName: String,
     val startTime: String,
     val endTime: String
+
 )
 

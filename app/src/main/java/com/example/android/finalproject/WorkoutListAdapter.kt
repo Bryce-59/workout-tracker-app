@@ -36,24 +36,27 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
         val current = getItem(position)
         holder.bind("Name: " + current.workoutName + "\n" +
                 "Start Time: " + current.startTime + "\n" +
-                "End Time: " + current.endTime)
+                "End Time: " + current.endTime, current)
     }
 
     class WordViewHolder(itemView: View, nodeLister: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val wordItemView: TextView = itemView.findViewById(R.id.workoutView)
         private val listener: OnItemClickListener = nodeLister
+        var workout: Workout = Workout(0,"", "", "")
         init {
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
+            Log.d("myTag", "ybyb");
             val position : Int = adapterPosition
             if (position != RecyclerView.NO_POSITION){
                 listener.onItemClick(position)
             }
         }
 
-        fun bind(text: String?) {
+        fun bind(text: String?, workout: Workout) {
+            this.workout = workout
             wordItemView.text = text
         }
 

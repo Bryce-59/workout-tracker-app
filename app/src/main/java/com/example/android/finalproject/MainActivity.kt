@@ -38,9 +38,10 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private val newWordActivityRequestCode = 1
-    private val wordViewModel: WordViewModel by viewModels {
+    private val workoutViewModel: WorkoutViewModel by viewModels {
         WordViewModelFactory((application as WorkoutsApplication).repository)
     }
+    private var adapter = WordListAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,7 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
         navView.setupWithNavController(navController)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = WordListAdapter(this)
+        adapter = WordListAdapter(this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
-        wordViewModel.allWords.observe(owner = this) { words ->
+        workoutViewModel.allWords.observe(owner = this) { words ->
             // Update the cached copy of the words in the adapter.
             words.let { adapter.submitList(it) }
         }
@@ -89,7 +90,7 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
         if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
                 val workout = Workout(0, reply[0], reply[1], reply[2])
-                wordViewModel.insert(workout)
+                workoutViewModel.insert(workout)
             }
         } else {
             Toast.makeText(
@@ -101,8 +102,16 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        Log.d("myTag", "ybybyby")
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
+        val curWorkout = viewHolder?.workout
+        var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime) }
+        if (workoutInfo != null) {
+            Log.d("myTag", workoutInfo[0])
+        };
+
         val intent = Intent(this@MainActivity, NewWorkoutActivity::class.java)
-        startActivityForResult(intent, newWordActivityRequestCode)
+        intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
+        startActivity(intent);
     }
 }

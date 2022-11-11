@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 /**
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
  * an up-to-date list of all words.
  */
 
-class WordViewModel(private val repository: WorkoutRepository) : ViewModel() {
+class WorkoutViewModel(private val repository: WorkoutRepository) : ViewModel() {
 
     // Using LiveData and caching what allWords returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the
@@ -42,13 +43,14 @@ class WordViewModel(private val repository: WorkoutRepository) : ViewModel() {
     fun insert(workout: Workout) = viewModelScope.launch {
         repository.insert(workout)
     }
+
 }
 
 class WordViewModelFactory(private val repository: WorkoutRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WordViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(WorkoutViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return WordViewModel(repository) as T
+            return WorkoutViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

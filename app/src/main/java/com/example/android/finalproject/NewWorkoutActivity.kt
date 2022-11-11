@@ -20,9 +20,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TimePicker
+import android.util.Log
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -33,8 +32,17 @@ class NewWorkoutActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_word)
+        setContentView(R.layout.activity_new_workout)
         val workoutName = findViewById<EditText>(R.id.workout_name)
+
+        var workoutInfo : Array<out String>? = intent?.getStringArrayExtra(SEARCH_REPLY)
+
+        if (workoutInfo != null) {
+            if (workoutInfo.size == 3)
+
+                workoutName.setText(workoutInfo[0], TextView.BufferType.EDITABLE)
+        }
+
         val startTime = findViewById<TimePicker>(R.id.startTimePicker)
         val endTime = findViewById<TimePicker>(R.id.endTimePicker)
 
@@ -55,9 +63,14 @@ class NewWorkoutActivity : AppCompatActivity() {
             }
             finish()
         }
+
+
+
     }
 
     companion object {
         const val EXTRA_REPLY = "com.example.android.workoutListsql.REPLY"
+        const val SEARCH_REPLY = "SEARCH.WORKOUT"
     }
+
 }

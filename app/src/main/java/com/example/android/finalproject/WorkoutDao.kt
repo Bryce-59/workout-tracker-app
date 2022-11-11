@@ -39,6 +39,9 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_table ORDER BY id ASC")
     fun getAlphabetizedWords(): Flow<List<Workout>>
 
+    @Query("SELECT * FROM workout_table WHERE id = :index LIMIT 1")
+    fun getEntryById(index:Int): Flow<Workout>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(workout: Workout)
 

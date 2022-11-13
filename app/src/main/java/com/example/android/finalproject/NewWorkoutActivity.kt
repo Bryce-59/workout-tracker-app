@@ -36,15 +36,20 @@ class NewWorkoutActivity : AppCompatActivity() {
         val workoutName = findViewById<EditText>(R.id.workout_name)
 
         var workoutInfo : Array<out String>? = intent?.getStringArrayExtra(SEARCH_REPLY)
+        val startTime = findViewById<TimePicker>(R.id.startTimePicker)
+        val endTime = findViewById<TimePicker>(R.id.endTimePicker)
 
         if (workoutInfo != null) {
             if (workoutInfo.size == 3)
-
                 workoutName.setText(workoutInfo[0], TextView.BufferType.EDITABLE)
-        }
+            val curStartTime = workoutInfo[1].split(":")
+            startTime.hour = Integer.parseInt(curStartTime[0])
+            startTime.minute = Integer.parseInt(curStartTime[1])
 
-        val startTime = findViewById<TimePicker>(R.id.startTimePicker)
-        val endTime = findViewById<TimePicker>(R.id.endTimePicker)
+            val curEndTime = workoutInfo[2].split(":")
+            endTime.hour = Integer.parseInt(curEndTime[0])
+            endTime.minute = Integer.parseInt(curEndTime[1])
+        }
 
 
         val button = findViewById<Button>(R.id.button_save)

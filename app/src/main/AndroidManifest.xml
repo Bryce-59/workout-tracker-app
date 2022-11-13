@@ -3,7 +3,7 @@
     package="com.example.android.finalproject">
 
     <application
-        android:name="com.example.android.finalproject.WorkoutsApplication"
+        android:name=".WorkoutsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,16 +11,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.example.android.finalproject.MainActivity"
-            android:label="@string/app_name"
-            android:exported="true">
+            android:name=".video"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.android.finalproject.NewWorkoutActivity" />
+        <activity android:name=".NewWorkoutActivity" />
     </application>
 
 </manifest>

@@ -16,10 +16,10 @@
 
 package com.example.android.finalproject
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -41,17 +41,36 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
 
     class WordViewHolder(itemView: View, nodeLister: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val wordItemView: TextView = itemView.findViewById(R.id.workoutView)
+        private val videoImage: ImageView = itemView.findViewById(R.id.playVideo)
+        private val musicImage: ImageView = itemView.findViewById(R.id.playMusic )
+        private val deleteImage: ImageView = itemView.findViewById(R.id.delete )
+
+
         private val listener: OnItemClickListener = nodeLister
         var workout: Workout = Workout(0,"", "", "")
         init {
             itemView.setOnClickListener(this)
+            videoImage.setOnClickListener(this)
+            musicImage.setOnClickListener(this)
+            deleteImage.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
-            Log.d("myTag", "ybyb");
+            var view_code : Int = 0
+            if (v != null) {
+                if (v.id == videoImage.id){
+                    view_code = 1
+                }else if (v.id == musicImage.id){
+                    view_code = 2
+                }else if (v.id == deleteImage.id){
+                    view_code = 3
+                }else{
+                    view_code = 0
+                }
+            }
             val position : Int = adapterPosition
             if (position != RecyclerView.NO_POSITION){
-                listener.onItemClick(position)
+                listener.onItemClick(position, view_code)
             }
         }
 
@@ -70,7 +89,7 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
     }
 
     interface OnItemClickListener{
-        fun onItemClick(position: Int)
+        fun onItemClick(position: Int, view_code: Int)
     }
 
     companion object {

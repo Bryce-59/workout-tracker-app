@@ -45,6 +45,4 @@ interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(workout: Workout)
 
-    @Query("DELETE FROM workout_table")
-    suspend fun deleteAll()
 }

@@ -113,4 +113,5 @@ limitations under the License. -->
     </string>
     <string name="title_workout">Workouts</string>
     <string name="title_browse">Browse</string>
+    <string name="playVideo">playVideo</string>
 </resources>

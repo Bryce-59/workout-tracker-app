@@ -101,17 +101,19 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
         }
     }
 
-    override fun onItemClick(position: Int) {
+    override fun onItemClick(position: Int, view_code : Int) {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
         val curWorkout = viewHolder?.workout
-        var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime) }
-        if (workoutInfo != null) {
-            Log.d("myTag", workoutInfo[0])
-        };
+        if (view_code == 0){
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime) }
+            val intent = Intent(this@MainActivity, NewWorkoutActivity::class.java)
+            intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
+            startActivity(intent)
+        }else if (view_code == 1){
+            val intent = Intent(this@MainActivity, video::class.java)
+            startActivity(intent)
+        }
 
-        val intent = Intent(this@MainActivity, NewWorkoutActivity::class.java)
-        intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
-        startActivity(intent);
     }
 }

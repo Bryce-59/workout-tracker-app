@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_browse"
-        android:icon="@drawable/icons8_online_shop_64"
+        android:icon="@drawable/icons8_four_squares_64"
         android:title="@string/title_browse" />
 
     <item
         android:id="@+id/navigation_workout"
-        android:icon="@drawable/icons8_add_96"
+        android:icon="@drawable/icons8_workout_64"
         android:title="@string/title_workout" />
 
     <item

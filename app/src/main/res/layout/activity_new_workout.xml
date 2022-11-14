@@ -19,11 +19,7 @@ limitations under the License. -->
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Type In Workout Name" />
+
 
     <EditText
         android:id="@+id/workout_name"
@@ -31,7 +27,18 @@ limitations under the License. -->
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/big_padding"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_word"
+        android:hint="Type In Workout Named"
+        android:inputType="textAutoComplete"
+        android:minHeight="@dimen/min_height"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/videoLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_padding"
+        android:fontFamily="sans-serif-light"
+        android:hint="Paste in Video Link"
         android:inputType="textAutoComplete"
         android:minHeight="@dimen/min_height"
         android:textSize="18sp" />

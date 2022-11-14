@@ -60,12 +60,16 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
         val curWorkout = viewHolder?.workout
         if (view_code == 0){
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString()) }
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink) }
             val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
             intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
             startActivityForResult(intent, repalceWordActivityRequestCode)
         }else if (view_code == 1){
             val intent = Intent(this@WorkoutFragment.context, video::class.java)
+            if (curWorkout != null) {
+                var link  = curWorkout.videoLink
+                intent.putExtra(NewWorkoutActivity.EXTRA_REPLY, link)
+            }
             startActivity(intent)
         }else if (view_code == 3){
             workoutViewModel.delete(curWorkout!!.id)
@@ -79,12 +83,12 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
                 Log.d("myTag", reply[0]);
-                val workout = Workout(0, reply[0], reply[1], reply[2])
+                val workout = Workout(0, reply[0], reply[1], reply[2], reply[4])
                 workoutViewModel.insert(workout)
             }
         }else if (requestCode == repalceWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
-                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2])
+                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2], reply[4])
                 workoutViewModel.update(workout)
             }
         } else {

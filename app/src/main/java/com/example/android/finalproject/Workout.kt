@@ -37,7 +37,8 @@ data class Workout(
     val id: Int,
     val workoutName: String,
     val startTime: String,
-    val endTime: String
+    val endTime: String,
+    val videoLink: String,
 
 )
 

@@ -45,8 +45,8 @@ interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(workout: Workout)
 
-    @Query("UPDATE workout_table SET workoutName=:workoutName, startTime=:startTime, endTime=:EndTime WHERE id = :index")
-    suspend fun update(workoutName: String, startTime:String, EndTime:String, index: Int)
+    @Query("UPDATE workout_table SET workoutName=:workoutName, startTime=:startTime, endTime=:EndTime, videoLink=:videoLink WHERE id = :index")
+    suspend fun update(workoutName: String, startTime:String, EndTime:String, index: Int, videoLink: String)
 
     @Query("DELETE FROM workout_table")
     suspend fun deleteAll()

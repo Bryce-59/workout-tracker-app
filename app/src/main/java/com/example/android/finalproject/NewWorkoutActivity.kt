@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
@@ -33,6 +34,7 @@ class NewWorkoutActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_workout)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val workoutName = findViewById<EditText>(R.id.workout_name)
 
         var workoutInfo : Array<out String>? = intent?.getStringArrayExtra(SEARCH_REPLY)
@@ -69,8 +71,11 @@ class NewWorkoutActivity : AppCompatActivity() {
             finish()
         }
 
+    }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

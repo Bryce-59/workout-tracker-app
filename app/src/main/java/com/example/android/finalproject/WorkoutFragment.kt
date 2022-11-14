@@ -1,18 +1,86 @@
 package com.example.android.finalproject
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.android.finalproject.databinding.FragmentWorkoutBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class WorkoutFragment : Fragment() {
+class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
+
+    private var _binding: FragmentWorkoutBinding? = null
+    private val binding get() = _binding!!
+
+    private val newWordActivityRequestCode = 1
+    private val workoutViewModel: WorkoutViewModel by viewModels {
+        WordViewModelFactory((activity?.application as WorkoutsApplication).repository)
+    }
+    private var adapter = WordListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_workout, container, false)
+        _binding = FragmentWorkoutBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fab.setOnClickListener {
+            val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
+            startActivityForResult(intent, newWordActivityRequestCode)
+        }
+
+        val recyclerView = binding.recyclerview
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        workoutViewModel.allWords.observe(viewLifecycleOwner) { words ->
+            // Update the cached copy of the words in the adapter.
+            words.let { adapter.submitList(it) }
+        }
+    }
+
+    override fun onItemClick(position: Int, view_code : Int) {
+        val recyclerView = binding.recyclerview
+        var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
+        val curWorkout = viewHolder?.workout
+        if (view_code == 0){
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime) }
+            val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
+            intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
+            startActivity(intent)
+        }else if (view_code == 1){
+            val intent = Intent(this@WorkoutFragment.context, video::class.java)
+            startActivity(intent)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intentData)
+        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
+                val workout = Workout(0, reply[0], reply[1], reply[2])
+                workoutViewModel.insert(workout)
+            }
+        } else {
+            Toast.makeText(
+                this.context,
+                R.string.empty_not_saved,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
 }

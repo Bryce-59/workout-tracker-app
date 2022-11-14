@@ -16,43 +16,31 @@
 
 package com.example.android.finalproject
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+
 import com.example.android.finalproject.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val newWordActivityRequestCode = 1
-    private val workoutViewModel: WorkoutViewModel by viewModels {
-        WordViewModelFactory((application as WorkoutsApplication).repository)
-    }
-    private var adapter = WordListAdapter(this)
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //setContentView(R.layout.activity_main)
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -62,58 +50,9 @@ class MainActivity : AppCompatActivity(), WordListAdapter.OnItemClickListener {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        adapter = WordListAdapter(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@MainActivity, NewWorkoutActivity::class.java)
-            startActivityForResult(intent, newWordActivityRequestCode)
-        }
-
-
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
-        // in the foreground.
-        workoutViewModel.allWords.observe(owner = this) { words ->
-            // Update the cached copy of the words in the adapter.
-            words.let { adapter.submitList(it) }
-        }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intentData)
-
-        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
-                val workout = Workout(0, reply[0], reply[1], reply[2])
-                workoutViewModel.insert(workout)
-            }
-        } else {
-            Toast.makeText(
-                applicationContext,
-                R.string.empty_not_saved,
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }
-
-    override fun onItemClick(position: Int, view_code : Int) {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
-        val curWorkout = viewHolder?.workout
-        if (view_code == 0){
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime) }
-            val intent = Intent(this@MainActivity, NewWorkoutActivity::class.java)
-            intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
-            startActivity(intent)
-        }else if (view_code == 1){
-            val intent = Intent(this@MainActivity, video::class.java)
-            startActivity(intent)
-        }
-
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

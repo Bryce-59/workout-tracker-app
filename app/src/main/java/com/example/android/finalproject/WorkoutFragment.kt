@@ -67,6 +67,8 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         }else if (view_code == 1){
             val intent = Intent(this@WorkoutFragment.context, video::class.java)
             startActivity(intent)
+        }else if (view_code == 3){
+            workoutViewModel.delete(curWorkout!!.id)
         }
     }
 

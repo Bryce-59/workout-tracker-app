@@ -43,6 +43,11 @@ class WorkoutRepository(private val workoutDao: WorkoutDao) {
         workoutDao.update(workout.workoutName, workout.startTime, workout.endTime, workout.id)
     }
 
+    @WorkerThread
+    suspend fun delete(id: Int) {
+        workoutDao.deleteWorkout(id)
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun search(id: Int) : Flow<Workout> {

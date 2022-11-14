@@ -48,6 +48,10 @@ class WorkoutViewModel(private val repository: WorkoutRepository) : ViewModel() 
         repository.update(workout)
     }
 
+    fun delete(id: Int) = viewModelScope.launch {
+        repository.delete(id)
+    }
+
 }
 
 class WordViewModelFactory(private val repository: WorkoutRepository) : ViewModelProvider.Factory {

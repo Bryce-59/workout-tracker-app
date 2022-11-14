@@ -3,6 +3,7 @@ package com.example.android.finalproject
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,8 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
     private val binding get() = _binding!!
 
     private val newWordActivityRequestCode = 1
+    private val repalceWordActivityRequestCode = 2
+
     private val workoutViewModel: WorkoutViewModel by viewModels {
         WordViewModelFactory((activity?.application as WorkoutsApplication).repository)
     }
@@ -57,10 +60,10 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
         val curWorkout = viewHolder?.workout
         if (view_code == 0){
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime) }
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString()) }
             val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
             intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
-            startActivity(intent)
+            startActivityForResult(intent, repalceWordActivityRequestCode)
         }else if (view_code == 1){
             val intent = Intent(this@WorkoutFragment.context, video::class.java)
             startActivity(intent)
@@ -69,10 +72,18 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
+        Log.d("myTag", requestCode.toString());
+        Log.d("myTag", Activity.RESULT_OK.toString());
         if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
+                Log.d("myTag", reply[0]);
                 val workout = Workout(0, reply[0], reply[1], reply[2])
                 workoutViewModel.insert(workout)
+            }
+        }else if (requestCode == repalceWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
+                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2])
+                workoutViewModel.update(workout)
             }
         } else {
             Toast.makeText(

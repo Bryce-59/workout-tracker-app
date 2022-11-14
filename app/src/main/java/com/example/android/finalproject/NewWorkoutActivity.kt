@@ -35,20 +35,21 @@ class NewWorkoutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_workout)
         val workoutName = findViewById<EditText>(R.id.workout_name)
 
+        var id = ""
         var workoutInfo : Array<out String>? = intent?.getStringArrayExtra(SEARCH_REPLY)
         val startTime = findViewById<TimePicker>(R.id.startTimePicker)
         val endTime = findViewById<TimePicker>(R.id.endTimePicker)
 
         if (workoutInfo != null) {
-            if (workoutInfo.size == 3)
+            if (workoutInfo.size == 4)
+                id = workoutInfo[3]
                 workoutName.setText(workoutInfo[0], TextView.BufferType.EDITABLE)
-            val curStartTime = workoutInfo[1].split(":")
-            startTime.hour = Integer.parseInt(curStartTime[0])
-            startTime.minute = Integer.parseInt(curStartTime[1])
-
-            val curEndTime = workoutInfo[2].split(":")
-            endTime.hour = Integer.parseInt(curEndTime[0])
-            endTime.minute = Integer.parseInt(curEndTime[1])
+                val curStartTime = workoutInfo[1].split(":")
+                startTime.hour = Integer.parseInt(curStartTime[0])
+                startTime.minute = Integer.parseInt(curStartTime[1])
+                val curEndTime = workoutInfo[2].split(":")
+                endTime.hour = Integer.parseInt(curEndTime[0])
+                endTime.minute = Integer.parseInt(curEndTime[1])
         }
 
 
@@ -61,9 +62,10 @@ class NewWorkoutActivity : AppCompatActivity() {
                 val workout = workoutName.text.toString()
                 val startTimeStr = startTime.hour.toString() + ":" + startTime.minute.toString()
                 val endTimeStr = endTime.hour.toString() + ":" + endTime.minute.toString()
-
-                var workoutInfo = arrayOf(workout, startTimeStr, endTimeStr)
-                replyIntent.putExtra(EXTRA_REPLY, workoutInfo)
+                Log.d("xxx", workout)
+                var newWorkout = arrayOf(workout, startTimeStr, endTimeStr, id)
+                replyIntent.putExtra(EXTRA_REPLY, newWorkout)
+                Log.d("startime", startTimeStr)
                 setResult(Activity.RESULT_OK, replyIntent)
             }
             finish()

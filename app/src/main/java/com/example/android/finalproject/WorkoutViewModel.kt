@@ -44,6 +44,10 @@ class WorkoutViewModel(private val repository: WorkoutRepository) : ViewModel() 
         repository.insert(workout)
     }
 
+    fun update(workout: Workout) = viewModelScope.launch {
+        repository.update(workout)
+    }
+
 }
 
 class WordViewModelFactory(private val repository: WorkoutRepository) : ViewModelProvider.Factory {

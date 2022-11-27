@@ -84,7 +84,9 @@ class NewWorkoutActivity : AppCompatActivity() {
             finish()
         }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
 
     }
 

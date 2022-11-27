@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject
+package com.example.android.finalproject.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

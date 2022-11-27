@@ -1,4 +1,4 @@
-package com.example.android.finalproject
+package com.example.android.finalproject.model
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -8,6 +8,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import android.util.Log
+import com.example.android.finalproject.NewWorkoutActivity
+import com.example.android.finalproject.R
 
 
 class video : AppCompatActivity() {

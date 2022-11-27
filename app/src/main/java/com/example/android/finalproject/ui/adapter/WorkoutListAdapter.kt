@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject
+package com.example.android.finalproject.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -24,9 +24,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.finalproject.WordListAdapter.WordViewHolder
+import com.example.android.finalproject.R
+import com.example.android.finalproject.ui.adapter.WordListAdapter.WordViewHolder
+import com.example.android.finalproject.model.Workout
 
-class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<Workout, WordViewHolder>(WORDS_COMPARATOR) {
+class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<Workout, WordViewHolder>(
+    WORDS_COMPARATOR
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
         return WordViewHolder.create(parent, listener)
@@ -42,8 +46,8 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
     class WordViewHolder(itemView: View, nodeLister: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val wordItemView: TextView = itemView.findViewById(R.id.workoutView)
         private val videoImage: ImageView = itemView.findViewById(R.id.playVideo)
-        private val musicImage: ImageView = itemView.findViewById(R.id.playMusic )
-        private val deleteImage: ImageView = itemView.findViewById(R.id.delete )
+        private val musicImage: ImageView = itemView.findViewById(R.id.playMusic)
+        private val deleteImage: ImageView = itemView.findViewById(R.id.delete)
 
 
         private val listener: OnItemClickListener = nodeLister

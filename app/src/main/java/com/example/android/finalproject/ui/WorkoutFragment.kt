@@ -1,4 +1,4 @@
-package com.example.android.finalproject
+package com.example.android.finalproject.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -9,12 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.android.finalproject.*
+import com.example.android.finalproject.data.WorkoutsApplication
 import com.example.android.finalproject.databinding.FragmentWorkoutBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.android.finalproject.model.Workout
+import com.example.android.finalproject.model.video
+import com.example.android.finalproject.ui.adapter.WordListAdapter
+import com.example.android.finalproject.ui.viewmodel.WordViewModelFactory
+import com.example.android.finalproject.ui.viewmodel.WorkoutViewModel
 
 class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
 

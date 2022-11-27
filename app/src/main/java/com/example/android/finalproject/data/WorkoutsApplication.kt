@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject
+package com.example.android.finalproject.data
 
 import android.app.Application
+import com.example.android.finalproject.data.WorkoutRepository
+import com.example.android.finalproject.data.WorkoutRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject
+package com.example.android.finalproject.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
+import com.example.android.finalproject.data.WorkoutRepository
+import com.example.android.finalproject.model.Workout
 import kotlinx.coroutines.launch
 
 /**

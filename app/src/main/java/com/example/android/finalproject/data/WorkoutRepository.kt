@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.finalproject
+package com.example.android.finalproject.data
 
 import androidx.annotation.WorkerThread
+import com.example.android.finalproject.model.Workout
 import kotlinx.coroutines.flow.Flow
 
 /**

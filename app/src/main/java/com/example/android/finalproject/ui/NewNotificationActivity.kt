@@ -20,6 +20,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.finalproject.R
@@ -33,6 +34,7 @@ class NewNotificationActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_notification)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // val workoutName = findViewById<EditText>(R.id.workout_name)
 
         var notificationInfo : Array<out String>? = intent?.getStringArrayExtra(SEARCH_REPLY)
@@ -103,6 +105,11 @@ class NewNotificationActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

@@ -27,7 +27,7 @@ So, we are leaving the template code in. -->
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_not"
+        android:id="@+id/recyclerview"
         android:layout_width="378dp"
         android:layout_height="444dp"
         android:layout_marginEnd="16dp"

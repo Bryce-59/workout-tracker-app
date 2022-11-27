@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_workout" />
 
     <fragment
+        android:id="@+id/navigation_notification"
+        android:name="com.example.android.finalproject.ui.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification" />
+
+    <fragment
         android:id="@+id/navigation_user"
         android:name="com.example.android.finalproject.ui.UserFragment"
         android:label="@string/title_user"

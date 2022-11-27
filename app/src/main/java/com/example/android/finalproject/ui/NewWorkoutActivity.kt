@@ -87,11 +87,11 @@ class NewWorkoutActivity : AppCompatActivity() {
 
     }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean {
-            finish()
-            return super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
 
-        }
+    }
 
     companion object {
         const val EXTRA_REPLY = "com.example.android.workoutListsql.REPLY"

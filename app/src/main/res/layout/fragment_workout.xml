@@ -45,32 +45,18 @@ So, we are leaving the template code in. -->
         android:id="@+id/fab"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="16dp"
         android:contentDescription="@string/schedule_word"
         android:src="@drawable/ic_add_black_24dp"
         app:fabCustomSize="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.906"
-        app:layout_constraintStart_toEndOf="@+id/fab2"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
-        app:layout_constraintVertical_bias="0.25"
-        app:maxImageSize="90dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:contentDescription="@string/add_word"
-        android:src="@drawable/ic_baseline_more_time_24"
-        app:fabCustomSize="120dp"
-        app:fabSize="auto"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview"
-        app:layout_constraintVertical_bias="0.25"
-        app:maxImageSize="75dp" />
+        app:layout_constraintVertical_bias="0.0"
+        app:maxImageSize="90dp" />
 
     <TextView
         android:id="@+id/textView"

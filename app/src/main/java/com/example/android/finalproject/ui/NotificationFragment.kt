@@ -20,53 +20,60 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import android.widget.*
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.android.finalproject.*
-import com.example.android.finalproject.databinding.ActivityNotificationBinding
-import com.example.android.finalproject.model.workout.Notification
 import com.example.android.finalproject.model.WorkoutsApplication
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.view.ViewGroup
+import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
+import com.example.android.finalproject.databinding.FragmentNotificationBinding
+import com.example.android.finalproject.model.workout.Notification
 
 /**
  * Activity for entering a word.
  */
 
-class NotificationActivity : AppCompatActivity(), NotiListAdapter.OnItemClickListener {
-    private lateinit var binding: ActivityNotificationBinding
+class NotificationFragment : Fragment(), NotiListAdapter.OnItemClickListener {
+    private var _binding: FragmentNotificationBinding? = null
+    private val binding get() = _binding!!
+
     private val newNotiActivityRequestCode = 1
+    private val repalceNotiActivityRequestCode = 2
+
     private val notificationViewModel: NotificationViewModel by viewModels {
-        NotiViewModelFactory((application as WorkoutsApplication).repositoryN)
+        NotiViewModelFactory((activity?.application as WorkoutsApplication).repositoryN)
     }
     private var adapter = NotiListAdapter(this)
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivityNotificationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview_not)
-        adapter = NotiListAdapter(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener {
-            val intent = Intent(this@NotificationActivity, NewNotificationActivity::class.java)
+        binding.fab.setOnClickListener {
+            val intent = Intent(this@NotificationFragment.context, NewNotificationActivity::class.java)
             startActivityForResult(intent, newNotiActivityRequestCode)
         }
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
         // in the foreground.
-        notificationViewModel.allWords.observe(owner = this) { words ->
+        val recyclerView = binding.recyclerview
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        notificationViewModel.allWords.observe(viewLifecycleOwner) { words ->
             // Update the cached copy of the words in the adapter.
             words.let { adapter.submitList(it) }
         }
@@ -79,16 +86,23 @@ class NotificationActivity : AppCompatActivity(), NotiListAdapter.OnItemClickLis
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
+        Log.d("myTag", requestCode.toString())
+        Log.d("myTag", Activity.RESULT_OK.toString())
 
         if (requestCode == newNotiActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewNotificationActivity.EXTRA_REPLY)?.let { reply ->
                 val notification =  Notification(0, reply[0], reply[1], false)
                 notificationViewModel.insert(notification)
             }
+        } else if (requestCode == repalceNotiActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
+                val notification = Notification(reply[3].toInt(), reply[0], reply[1], false)
+                notificationViewModel.update(notification)
+            }
         } else {
             Toast.makeText(
-                applicationContext,
-                R.string.empty_not_saved,
+                this.context,
+                "Notification not saved because it was empty",
                 Toast.LENGTH_LONG
             ).show()
         }
@@ -96,7 +110,7 @@ class NotificationActivity : AppCompatActivity(), NotiListAdapter.OnItemClickLis
 
     override fun onItemClick(position: Int, view_code: Int) {
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview_not)
+        val recyclerView = binding.recyclerview
         var viewHolder: NotiListAdapter.NotiViewHolder? =
             recyclerView.findViewHolderForAdapterPosition(position) as NotiListAdapter.NotiViewHolder;
         val curNotification = viewHolder?.notification
@@ -107,17 +121,11 @@ class NotificationActivity : AppCompatActivity(), NotiListAdapter.OnItemClickLis
         };
 
         if (view_code == 0) {
-            val intent = Intent(this@NotificationActivity, NewNotificationActivity::class.java)
+            val intent = Intent(this@NotificationFragment.context, NewWorkoutActivity::class.java)
             intent.putExtra(NewNotificationActivity.SEARCH_REPLY, notificationInfo)
             startActivity(intent);
         } else if (view_code == 3){
             notificationViewModel.delete(curNotification!!.id)
         }
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        finish()
-        return super.onOptionsItemSelected(item)
-    }
-
 }

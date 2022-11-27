@@ -13,45 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.finalproject.data
+package com.example.android.finalproject.model.workout
 
 import androidx.annotation.WorkerThread
-import com.example.android.finalproject.model.Workout
+import com.example.android.finalproject.model.workout.Workout
 import kotlinx.coroutines.flow.Flow
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
-class WorkoutRepository(private val workoutDao: WorkoutDao) {
+class NotificationRepository(private val notificationDao: NotificationDao) {
 
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    val allWords: Flow<List<Workout>> = workoutDao.getAlphabetizedWords()
+    val allWords: Flow<List<Notification>> = notificationDao.getAlphabetizedWords()
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
     // off the main thread.
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(workout: Workout) {
-        workoutDao.insert(workout)
+    suspend fun insert(notification: Notification) {
+        notificationDao.insert(notification)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun update(workout: Workout) {
-        workoutDao.update(workout.workoutName, workout.startTime, workout.endTime, workout.id, workout.videoLink)
+    suspend fun update(notification: Notification) {
+        notificationDao.update(notification.day_of_week, notification.start_time, notification.weekly.toString(), notification.id)
     }
-
     @WorkerThread
     suspend fun delete(id: Int) {
-        workoutDao.deleteWorkout(id)
+        notificationDao.deleteNotification(id)
     }
-
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun search(id: Int) : Flow<Workout> {
-        return workoutDao.getEntryById(id)
+    suspend fun search(id: Int) : Flow<Notification> {
+        return notificationDao.getEntryById(id)
     }
 }

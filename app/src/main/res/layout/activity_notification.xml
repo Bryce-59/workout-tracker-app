@@ -27,9 +27,9 @@ So, we are leaving the template code in. -->
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/recyclerview_not"
         android:layout_width="378dp"
-        android:layout_height="420dp"
+        android:layout_height="444dp"
         android:layout_marginEnd="16dp"
         android:padding="@dimen/big_padding"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,8 +38,8 @@ So, we are leaving the template code in. -->
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186"
-        tools:listitem="@layout/recyclerview_workout" />
+        app:layout_constraintVertical_bias="0.337"
+        tools:listitem="@layout/recyclerview_notification" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -50,37 +50,36 @@ So, we are leaving the template code in. -->
         app:fabCustomSize="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.906"
-        app:layout_constraintStart_toEndOf="@+id/fab2"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_not"
+        app:layout_constraintVertical_bias="0.555"
         app:maxImageSize="90dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab2"
+        android:id="@+id/button_back"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:contentDescription="@string/add_word"
-        android:src="@drawable/ic_baseline_more_time_24"
+        android:contentDescription="@string/schedule_word"
+        android:src="@drawable/ic_baseline_arrow_back_24"
         app:fabCustomSize="120dp"
-        app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
-        app:layout_constraintVertical_bias="0.25"
-        app:maxImageSize="75dp" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_not"
+        app:layout_constraintVertical_bias="0.557"
+        app:maxImageSize="90dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="335dp"
         android:layout_height="38dp"
         android:fontFamily="sans-serif-black"
-        android:text="WORKOUT TRACKER"
+        android:text="SCHEDULED WORKOUTS"
         android:textAlignment="center"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerview"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerview_not"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

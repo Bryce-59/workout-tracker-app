@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.data
+package com.example.android.finalproject.model.workout
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.android.finalproject.model.Workout
+import com.example.android.finalproject.model.workout.Workout
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -33,25 +33,25 @@ import kotlinx.coroutines.flow.Flow
  */
 
 @Dao
-interface WorkoutDao {
+interface NotificationDao {
 
     // The flow always holds/caches latest version of data. Notifies its observers when the
     // data has changed.
-    @Query("SELECT * FROM workout_table ORDER BY id ASC")
-    fun getAlphabetizedWords(): Flow<List<Workout>>
+    @Query("SELECT * FROM notification_table ORDER BY id ASC")
+    fun getAlphabetizedWords(): Flow<List<Notification>>
 
-    @Query("SELECT * FROM workout_table WHERE id = :index LIMIT 1")
-    fun getEntryById(index:Int): Flow<Workout>
+    @Query("SELECT * FROM notification_table WHERE id = :index LIMIT 1")
+    fun getEntryById(index:Int): Flow<Notification>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(workout: Workout)
+    suspend fun insert(notification: Notification)
 
-    @Query("UPDATE workout_table SET workoutName=:workoutName, startTime=:startTime, endTime=:EndTime, videoLink=:videoLink WHERE id = :index")
-    suspend fun update(workoutName: String, startTime:String, EndTime:String, index: Int, videoLink: String)
+    @Query("UPDATE notification_table SET day_of_week=:day_of_week, start_time=:start_time, weekly=:weekly WHERE id = :index")
+    suspend fun update(day_of_week: String, start_time:String, weekly:String, index: Int)
 
-    @Query("DELETE FROM workout_table")
+    @Query("DELETE FROM notification_table")
     suspend fun deleteAll()
 
-    @Query("DELETE FROM workout_table where id=:id")
-    suspend fun deleteWorkout(id: Int)
+    @Query("DELETE FROM notification_table where id=:id")
+    suspend fun deleteNotification(id: Int)
 }

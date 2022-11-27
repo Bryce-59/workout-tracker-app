@@ -1,4 +1,4 @@
-package com.example.android.finalproject.model
+package com.example.android.finalproject.model.user
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

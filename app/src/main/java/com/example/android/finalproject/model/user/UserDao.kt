@@ -2,7 +2,7 @@ package com.example.android.finalproject.data
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.example.android.finalproject.model.User
+import com.example.android.finalproject.model.user.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.data
+package com.example.android.finalproject.model
 
 import android.app.Application
-import com.example.android.finalproject.data.WorkoutRepository
-import com.example.android.finalproject.data.WorkoutRoomDatabase
+import com.example.android.finalproject.data.UserDatabase
+import com.example.android.finalproject.data.UserRepository
+import com.example.android.finalproject.model.notification.NotificationRoomDatabase
+import com.example.android.finalproject.model.workout.NotificationRepository
+import com.example.android.finalproject.model.workout.WorkoutRepository
+import com.example.android.finalproject.model.workout.WorkoutRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -28,8 +32,10 @@ class WorkoutsApplication : Application() {
 
     // Using by lazy so the database and the repository are only created when they're needed
     // rather than when the application starts
-    val database by lazy { WorkoutRoomDatabase.getDatabase(this, applicationScope) }
+    val databaseW by lazy { WorkoutRoomDatabase.getDatabase(this, applicationScope) }
+    val databaseN by lazy { NotificationRoomDatabase.getDatabase(this, applicationScope) }
     private val userDatabase by lazy { UserDatabase.getDatabase(this, applicationScope) }
-    val repository by lazy { WorkoutRepository(database.wordDao()) }
+    val repositoryW by lazy { WorkoutRepository(databaseW.wordDao()) }
+    val repositoryN by lazy { NotificationRepository(databaseN.wordDao()) }
     val userRepository by lazy { UserRepository(userDatabase.userDao()) }
 }

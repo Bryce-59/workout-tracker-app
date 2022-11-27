@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.ui.viewmodel
+package com.example.android.finalproject
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.android.finalproject.data.WorkoutRepository
-import com.example.android.finalproject.model.Workout
+import com.example.android.finalproject.model.workout.Notification
+import com.example.android.finalproject.model.workout.NotificationRepository
+import com.example.android.finalproject.model.workout.Workout
+import com.example.android.finalproject.model.workout.WorkoutRepository
 import kotlinx.coroutines.launch
 
 /**
@@ -30,36 +32,34 @@ import kotlinx.coroutines.launch
  * an up-to-date list of all words.
  */
 
-class WorkoutViewModel(private val repository: WorkoutRepository) : ViewModel() {
+class NotificationViewModel(private val repository: NotificationRepository) : ViewModel() {
 
     // Using LiveData and caching what allWords returns has several benefits:
     // - We can put an observer on the data (instead of polling for changes) and only update the
     //   the UI when the data actually changes.
     // - Repository is completely separated from the UI through the ViewModel.
-    val allWords: LiveData<List<Workout>> = repository.allWords.asLiveData()
+    val allWords: LiveData<List<Notification>> = repository.allWords.asLiveData()
 
     /**
      * Launching a new coroutine to insert the data in a non-blocking way
      */
-    fun insert(workout: Workout) = viewModelScope.launch {
-        repository.insert(workout)
+    fun insert(notification: Notification) = viewModelScope.launch {
+        repository.insert(notification)
     }
 
-    fun update(workout: Workout) = viewModelScope.launch {
-        repository.update(workout)
+    fun update(notification: Notification) = viewModelScope.launch {
+        repository.update(notification)
     }
-
     fun delete(id: Int) = viewModelScope.launch {
         repository.delete(id)
     }
-
 }
 
-class WordViewModelFactory(private val repository: WorkoutRepository) : ViewModelProvider.Factory {
+class NotiViewModelFactory(private val repository: NotificationRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WorkoutViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(NotificationViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return WorkoutViewModel(repository) as T
+            return NotificationViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

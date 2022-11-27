@@ -12,13 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.finalproject.*
-import com.example.android.finalproject.data.WorkoutsApplication
 import com.example.android.finalproject.databinding.FragmentWorkoutBinding
-import com.example.android.finalproject.model.Workout
-import com.example.android.finalproject.model.video
-import com.example.android.finalproject.ui.adapter.WordListAdapter
-import com.example.android.finalproject.ui.viewmodel.WordViewModelFactory
-import com.example.android.finalproject.ui.viewmodel.WorkoutViewModel
+import com.example.android.finalproject.model.workout.Workout
+import com.example.android.finalproject.model.WorkoutsApplication
 
 class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
 
@@ -29,7 +25,7 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
     private val repalceWordActivityRequestCode = 2
 
     private val workoutViewModel: WorkoutViewModel by viewModels {
-        WordViewModelFactory((activity?.application as WorkoutsApplication).repository)
+        WordViewModelFactory((activity?.application as WorkoutsApplication).repositoryW)
     }
     private var adapter = WordListAdapter(this)
 
@@ -61,21 +57,27 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int, view_code : Int) {
         val recyclerView = binding.recyclerview
-        var viewHolder : WordListAdapter.WordViewHolder? = recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
+        var viewHolder: WordListAdapter.WordViewHolder? =
+            recyclerView.findViewHolderForAdapterPosition(position) as WordListAdapter.WordViewHolder;
         val curWorkout = viewHolder?.workout
-        if (view_code == 0){
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink) }
+
+        if (view_code == 0) {
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.videoLink) }
+            if (workoutInfo != null) {
+                Log.d("myTag", workoutInfo[0])
+            };
+
             val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
             intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
             startActivityForResult(intent, repalceWordActivityRequestCode)
         }else if (view_code == 1){
-            val intent = Intent(this@WorkoutFragment.context, video::class.java)
+            val intent = Intent(this@WorkoutFragment.context, Video::class.java)
             if (curWorkout != null) {
                 var link  = curWorkout.videoLink
                 intent.putExtra(NewWorkoutActivity.EXTRA_REPLY, link)
             }
             startActivity(intent)
-        }else if (view_code == 3){
+        } else if (view_code == 3){
             workoutViewModel.delete(curWorkout!!.id)
         }
     }

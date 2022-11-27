@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.model
+package com.example.android.finalproject.model.workout
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -40,5 +40,4 @@ data class Workout(
     val endTime: String,
     val videoLink: String,
 
-)
-
+    )

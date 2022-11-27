@@ -3,7 +3,7 @@ package com.example.android.finalproject.data
 import android.content.Context
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.android.finalproject.model.User
+import com.example.android.finalproject.model.user.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

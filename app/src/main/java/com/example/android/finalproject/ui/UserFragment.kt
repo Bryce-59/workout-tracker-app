@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.android.finalproject.R
-import com.example.android.finalproject.data.WorkoutsApplication
 import com.example.android.finalproject.databinding.FragmentUserBinding
-import com.example.android.finalproject.model.User
-import com.example.android.finalproject.ui.viewmodel.UserViewModel
-import com.example.android.finalproject.ui.viewmodel.UserViewModelFactory
+import com.example.android.finalproject.model.user.User
+import com.example.android.finalproject.model.user.UserViewModel
+import com.example.android.finalproject.model.user.UserViewModelFactory
+import com.example.android.finalproject.model.WorkoutsApplication
 
 class UserFragment : Fragment() {
 

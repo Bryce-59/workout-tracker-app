@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_browse"
-        android:icon="@drawable/icons8_four_squares_64"
-        android:title="@string/title_browse" />
-
-    <item
         android:id="@+id/navigation_workout"
         android:icon="@drawable/icons8_workout_64"
         android:title="@string/title_workout" />

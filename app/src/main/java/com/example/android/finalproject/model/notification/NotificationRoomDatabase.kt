@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.data
+package com.example.android.finalproject.model.notification
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.android.finalproject.model.Workout
+import com.example.android.finalproject.model.workout.Notification
+import com.example.android.finalproject.model.workout.NotificationDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,31 +31,31 @@ import kotlinx.coroutines.launch
  * This is the backend. The database. This used to be done by the OpenHelper.
  * The fact that this has very few comments emphasizes its coolness.
  */
-@Database(entities = [Workout::class], version = 3)
-abstract class WorkoutRoomDatabase : RoomDatabase() {
+@Database(entities = [Notification::class], version = 4)
+abstract class NotificationRoomDatabase : RoomDatabase() {
 
-    abstract fun wordDao(): WorkoutDao
+    abstract fun wordDao(): NotificationDao
 
     companion object {
         @Volatile
-        private var INSTANCE: WorkoutRoomDatabase? = null
+        private var INSTANCE: NotificationRoomDatabase? = null
 
         fun getDatabase(
             context: Context,
             scope: CoroutineScope
-        ): WorkoutRoomDatabase {
+        ): NotificationRoomDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    WorkoutRoomDatabase::class.java,
-                    "word_database"
+                    NotificationRoomDatabase::class.java,
+                    "noti_database"
                 )
                     // Wipes and rebuilds instead of migrating if no Migration object.
                     // Migration is not part of this codelab.
                     .fallbackToDestructiveMigration()
-                    .addCallback(WordDatabaseCallback(scope))
+                    .addCallback(NotiDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -62,7 +63,7 @@ abstract class WorkoutRoomDatabase : RoomDatabase() {
             }
         }
 
-        private class WordDatabaseCallback(
+        private class NotiDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
             /**
@@ -84,10 +85,10 @@ abstract class WorkoutRoomDatabase : RoomDatabase() {
          * Populate the database in a new coroutine.
          * If you want to start with more words, just add them.
          */
-        suspend fun populateDatabase(workoutDao: WorkoutDao) {
+        suspend fun populateDatabase(notificationDao: NotificationDao) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
-            workoutDao.deleteAll()
+            notificationDao.deleteAll()
         }
     }
 }

@@ -41,17 +41,20 @@ class UserFragment : Fragment() {
                 "user Data is empty",
                 Toast.LENGTH_LONG
             ).show()
-            return
-        }
-        userViewModel.userData.observe(viewLifecycleOwner) {
-            user = it
-            bindUser()
+            val dialog = MeasurementDialog()
+            dialog.show(childFragmentManager, "MeasurementDialog")
+        }else {
+            userViewModel.userData.observe(viewLifecycleOwner) {
+                user = it
+                bindUser()
+            }
         }
     }
 
     private fun bindUser() {
         binding.apply {
-
+            heightValue.text = user.height
+            weightValue.text = user.weight.toString()
         }
     }
 }

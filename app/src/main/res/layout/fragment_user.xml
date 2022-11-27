@@ -64,6 +64,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/height_label" />
 
             <TextView
+                android:id="@+id/weight_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter your height"

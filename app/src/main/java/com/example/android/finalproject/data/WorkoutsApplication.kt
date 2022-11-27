@@ -29,5 +29,7 @@ class WorkoutsApplication : Application() {
     // Using by lazy so the database and the repository are only created when they're needed
     // rather than when the application starts
     val database by lazy { WorkoutRoomDatabase.getDatabase(this, applicationScope) }
+    private val userDatabase by lazy { UserDatabase.getDatabase(this, applicationScope) }
     val repository by lazy { WorkoutRepository(database.wordDao()) }
+    val userRepository by lazy { UserRepository(userDatabase.userDao()) }
 }

@@ -45,10 +45,6 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
             val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
             startActivityForResult(intent, newWordActivityRequestCode)
         }
-        binding.fab2.setOnClickListener {
-            val intent2 = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
-            startActivityForResult(intent2, newWordActivityRequestCode)
-        }
 
 
         val recyclerView = binding.recyclerview

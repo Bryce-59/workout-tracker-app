@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navigation_workout"
-        android:icon="@drawable/icons8_workout_64"
+        android:icon="@drawable/icons8_add_96"
         android:title="@string/title_workout" />
 
     <item

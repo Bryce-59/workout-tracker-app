@@ -45,6 +45,11 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
             val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
             startActivityForResult(intent, newWordActivityRequestCode)
         }
+        binding.fab2.setOnClickListener {
+            val intent2 = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
+            startActivityForResult(intent2, newWordActivityRequestCode)
+        }
+
 
         val recyclerView = binding.recyclerview
         recyclerView.adapter = adapter
@@ -62,7 +67,7 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         val curWorkout = viewHolder?.workout
 
         if (view_code == 0) {
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.videoLink) }
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink) }
             if (workoutInfo != null) {
                 Log.d("myTag", workoutInfo[0])
             };

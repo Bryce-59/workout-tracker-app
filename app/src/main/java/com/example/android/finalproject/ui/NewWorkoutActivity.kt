@@ -21,6 +21,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.finalproject.R
@@ -84,9 +85,13 @@ class NewWorkoutActivity : AppCompatActivity() {
             finish()
         }
 
-
-
     }
+
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            finish()
+            return super.onOptionsItemSelected(item)
+
+        }
 
     companion object {
         const val EXTRA_REPLY = "com.example.android.workoutListsql.REPLY"

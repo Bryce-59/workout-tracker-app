@@ -1,5 +1,6 @@
 package com.example.android.finalproject.ui
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -61,6 +62,7 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
         binding.apply {
             heightValue.text = user.height
             weightValue.text = user.weight.toString()
+            lastUpdateText.text = "last updated " + user.date
         }
     }
 

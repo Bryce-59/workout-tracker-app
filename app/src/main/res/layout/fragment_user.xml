@@ -31,44 +31,85 @@
                 android:layout_height="wrap_content"
                 android:text="Body Measurements"
                 android:textColor="#9C27B0"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/edit_icon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/icons8_pencil_50"
+                app:layout_constraintBottom_toBottomOf="@+id/body_measurement_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/body_measurement_label" />
+
+            <ImageView
+                android:id="@+id/weight_image"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/icons8_weight_64"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/body_measurement_label"/>
 
             <TextView
                 android:id="@+id/height_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="Weight"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/weight_image"
                 app:layout_constraintTop_toBottomOf="@+id/body_measurement_label" />
 
             <TextView
                 android:id="@+id/weight_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Enter your weight"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/body_measurement_label" />
+
+            <ImageView
+                android:id="@+id/height_image"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:src="@drawable/icons8_ruler_64"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/height_label"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="Height"
-                android:textSize="20dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/height_image"
                 app:layout_constraintTop_toBottomOf="@+id/height_label" />
 
             <TextView
                 android:id="@+id/height_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Enter your height"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/height_label" />
+
+            <TextView
+                android:id="@+id/last_update_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/last_update"
+                app:layout_constraintTop_toBottomOf="@id/height_value"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

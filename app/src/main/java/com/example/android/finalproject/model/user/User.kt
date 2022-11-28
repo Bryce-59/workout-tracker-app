@@ -7,10 +7,10 @@ import androidx.room.TypeConverters
 import java.text.DateFormat
 import java.util.*
 
-@Entity(tableName = "user_data")
+@Entity(tableName = "user_table")
 data class User(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val weight: Double,
     val height: String,
     val calories: Double,

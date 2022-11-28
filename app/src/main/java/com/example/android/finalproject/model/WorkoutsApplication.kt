@@ -17,7 +17,7 @@
 package com.example.android.finalproject.model
 
 import android.app.Application
-import com.example.android.finalproject.data.UserDatabase
+import com.example.android.finalproject.model.user.UserDatabase
 import com.example.android.finalproject.data.UserRepository
 import com.example.android.finalproject.model.notification.NotificationRoomDatabase
 import com.example.android.finalproject.model.workout.NotificationRepository

@@ -46,7 +46,7 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
         private val musicImage: ImageView = itemView.findViewById(R.id.playMusic )
         private val deleteImage: ImageView = itemView.findViewById(R.id.delete )
         private val listener: OnItemClickListener = nodeLister
-        var workout: Workout = Workout(0,"", "", "", "")
+        var workout: Workout = Workout(0,"", "", "", "", "")
         init {
             itemView.setOnClickListener(this)
             videoImage.setOnClickListener(this)

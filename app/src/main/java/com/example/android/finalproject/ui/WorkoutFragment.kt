@@ -90,12 +90,12 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
                 Log.d("myTag", reply[0]);
-                val workout = Workout(0, reply[0], reply[1], reply[2], reply[4])
+                val workout = Workout(0, reply[0], reply[1], reply[2], reply[4], reply[5])
                 workoutViewModel.insert(workout)
             }
         }else if (requestCode == repalceWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
-                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2], reply[4])
+                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2], reply[4], reply[5])
                 workoutViewModel.update(workout)
             }
         } else {

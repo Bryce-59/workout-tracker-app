@@ -42,7 +42,7 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.userHistory.observe(viewLifecycleOwner) { user ->
             if (user.isEmpty()) {
-                val dialog = MeasurementDialog()
+                val dialog = MeasurementDialog(TYPE_CREATE)
                 dialog.show(childFragmentManager, "MeasurementDialog")
             }else{
                 userViewModel.userData.observe(viewLifecycleOwner) {
@@ -50,6 +50,10 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
                     bindUser()
                 }
             }
+        }
+        binding.bodyMeasurementCard.setOnClickListener {
+            val dialog = MeasurementDialog(TYPE_UPDATE)
+            dialog.show(childFragmentManager, "MeasurementDialog")
         }
     }
 
@@ -60,7 +64,7 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
         }
     }
 
-    override fun onDialogPositiveClick(dialog: DialogFragment, view: View) {
+    override fun onDialogPositiveClick(dialog: DialogFragment, view: View, type: Int) {
         val calendar = Calendar.getInstance()
         val dateString = SimpleDateFormat("yyyy-MM-dd")
             .format(calendar.time)
@@ -69,14 +73,35 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
             view.findViewById<EditText>(R.id.user_weight).text.toString().toDouble()
         val feet = view.findViewById<EditText>(R.id.user_height_ft).text.toString()
         val inch = view.findViewById<EditText>(R.id.user_height_inch).text.toString()
-        val user = User(
-            weight = weight,
-            height = feet + "\'" + inch +"\"",
-            calories = 0.0,
-            distance = 0.0,
-            workoutTime = 0,
-            date = dateString
-        )
-        userViewModel.insert(user)
+
+
+        if (type == TYPE_CREATE) {
+            val user = User(
+                weight = weight,
+                height = feet + "\'" + inch +"\"",
+                calories = 0.0,
+                distance = 0.0,
+                workoutTime = 0,
+                date = dateString
+            )
+            userViewModel.insert(user)
+        } else if(type == TYPE_UPDATE){
+            val user = User(
+                id = user.id,
+                weight = weight,
+                height = feet + "\'" + inch +"\"",
+                calories = user.calories,
+                distance = user.distance,
+                workoutTime = user.workoutTime,
+                date = dateString
+            )
+            userViewModel.update(user)
+        }
+
+    }
+
+    companion object{
+        const val TYPE_CREATE = 1
+        const val TYPE_UPDATE = 2
     }
 }

@@ -21,12 +21,12 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
-class MeasurementDialog : DialogFragment() {
+class MeasurementDialog(private val type: Int) : DialogFragment() {
 
     private lateinit var listener: MeasurementDialogListener
 
     interface MeasurementDialogListener {
-        fun onDialogPositiveClick(dialog: DialogFragment, view: View)
+        fun onDialogPositiveClick(dialog: DialogFragment, view: View, type: Int)
     }
 
     override fun onAttach(context: Context) {
@@ -50,7 +50,7 @@ class MeasurementDialog : DialogFragment() {
             builder
                 .setView(dialogView)
                 .setPositiveButton("Save") { dialog, id ->
-                    listener.onDialogPositiveClick(this, dialogView)
+                    listener.onDialogPositiveClick(this, dialogView, type)
                 }
                 .setNegativeButton("Cancel") { _, _ ->
                     dialog?.cancel()

@@ -1,10 +1,14 @@
 package com.example.android.finalproject.ui
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -86,12 +90,12 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
         val dateString = SimpleDateFormat("yyyy-MM-dd")
             .format(calendar.time)
 
-        val weight =
-            view.findViewById<EditText>(R.id.user_weight).text.toString().toDouble()
+        val weightText =
+            view.findViewById<EditText>(R.id.user_weight).text.toString()
         val feet = view.findViewById<EditText>(R.id.user_height_ft).text.toString()
         val inch = view.findViewById<EditText>(R.id.user_height_inch).text.toString()
 
-
+        val weight = weightText.toDouble()
         if (type == TYPE_CREATE) {
             val user = User(
                 weight = weight,
@@ -108,7 +112,6 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
             )
             userViewModel.update(user)
         }
-
     }
 
     companion object{

@@ -70,16 +70,17 @@ class MeasurementDialog(private val type: Int) : DialogFragment() {
 
                 val textWatcher = object: TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
                         button.isEnabled =
                             !(editWeight.text.isEmpty() || editHeightFt.text.isEmpty() || editHeightIn.text.isEmpty())
+                                    && !(editWeight.text.toString().toDouble() < 1
+                                    || editHeightFt.text.toString().toInt() < 1
+                                    || editHeightIn.text.toString().toInt() < 1)
                     }
 
                 }

@@ -8,10 +8,7 @@
     tools:context=".ui.UserFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="My Data"/>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -33,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="Body Measurements"
                 android:textColor="#9C27B0"
-                android:textSize="35dp"
+                android:textSize="30dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,7 +44,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/body_measurement_label" />
 
             <TextView
-                android:id="@+id/height_value"
+                android:id="@+id/weight_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter your weight"
@@ -64,7 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/height_label" />
 
             <TextView
-                android:id="@+id/weight_value"
+                android:id="@+id/height_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Enter your height"

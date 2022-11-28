@@ -1,13 +1,10 @@
 package com.example.android.finalproject.ui
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -74,13 +71,13 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
     }
 
     private fun bmiCategory(bmi: Double): String{
-        when {
-            bmi < 18.5 -> return "Underweight"
-            bmi in 18.5..24.9 -> return "Normal"
-            bmi in 25.0..29.9 -> return "Overweight"
-            bmi in 30.0..34.9 -> return "Obese"
-            bmi in 35.0..39.9 -> return "Severely Obese"
-            else -> return "Morbidly Obese"
+        return when {
+            bmi < 18.5 -> "Underweight"
+            bmi in 18.5..24.9 -> "Normal"
+            bmi in 25.0..29.9 -> "Overweight"
+            bmi in 30.0..34.9 -> "Obese"
+            bmi in 35.0..39.9 -> "Severely Obese"
+            else -> "Morbidly Obese"
         }
     }
 
@@ -99,9 +96,6 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
             val user = User(
                 weight = weight,
                 height = feet + "\'" + inch +"\"",
-                calories = 0.0,
-                distance = 0.0,
-                workoutTime = 0,
                 date = dateString
             )
             userViewModel.insert(user)
@@ -110,9 +104,6 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
                 id = user.id,
                 weight = weight,
                 height = feet + "\'" + inch +"\"",
-                calories = user.calories,
-                distance = user.distance,
-                workoutTime = user.workoutTime,
                 date = dateString
             )
             userViewModel.update(user)

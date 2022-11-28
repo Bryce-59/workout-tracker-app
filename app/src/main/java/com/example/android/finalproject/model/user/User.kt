@@ -13,9 +13,6 @@ data class User(
     val id: Int = 0,
     val weight: Double,
     val height: String,
-    val calories: Double,
-    val distance: Double,
-    val workoutTime: Int,
     val date: String,
 )
 

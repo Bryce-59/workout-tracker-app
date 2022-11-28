@@ -54,7 +54,7 @@
                 app:layout_constraintTop_toBottomOf="@id/body_measurement_label"/>
 
             <TextView
-                android:id="@+id/height_label"
+                android:id="@+id/weight_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -81,7 +81,7 @@
                 android:src="@drawable/icons8_ruler_64"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/height_label"/>
+                app:layout_constraintTop_toBottomOf="@id/weight_label"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
                 android:text="Height"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/height_image"
-                app:layout_constraintTop_toBottomOf="@+id/height_label" />
+                app:layout_constraintTop_toBottomOf="@+id/weight_label" />
 
             <TextView
                 android:id="@+id/height_value"
@@ -101,14 +101,45 @@
                 android:text="Enter your height"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/height_label" />
+                app:layout_constraintTop_toBottomOf="@+id/weight_label" />
+
+            <ImageView
+                android:id="@+id/bmi_image"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/icons8_folder_64"
+                app:layout_constraintTop_toBottomOf="@id/height_image"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:text="BMI"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/bmi_image"
+                app:layout_constraintTop_toBottomOf="@id/height_image" />
+
+            <TextView
+                android:id="@+id/bmi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:text="Unavailable"
+                app:layout_constraintTop_toBottomOf="@id/height_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
             <TextView
                 android:id="@+id/last_update_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/last_update"
-                app:layout_constraintTop_toBottomOf="@id/height_value"
+                app:layout_constraintTop_toBottomOf="@id/bmi_image"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

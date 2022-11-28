@@ -19,6 +19,7 @@ import com.example.android.finalproject.model.user.UserViewModelFactory
 import com.example.android.finalproject.model.WorkoutsApplication
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.pow
 
 class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
 
@@ -63,6 +64,23 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
             heightValue.text = user.height
             weightValue.text = user.weight.toString()
             lastUpdateText.text = "last updated " + user.date
+
+            val heightText = user.height.split("\'")
+            val bmi =
+                user.weight / (heightText[0].toDouble() * 12 + heightText[1].dropLast(1)
+                    .toInt()).pow(2.0) * 703
+            bmiText.text = String.format("%.2f (%s)", bmi, bmiCategory(bmi))
+        }
+    }
+
+    private fun bmiCategory(bmi: Double): String{
+        when {
+            bmi < 18.5 -> return "Underweight"
+            bmi in 18.5..24.9 -> return "Normal"
+            bmi in 25.0..29.9 -> return "Overweight"
+            bmi in 30.0..34.9 -> return "Obese"
+            bmi in 35.0..39.9 -> return "Severely Obese"
+            else -> return "Morbidly Obese"
         }
     }
 

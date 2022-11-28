@@ -1,13 +1,25 @@
 package com.example.android.finalproject.model.user
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.example.android.finalproject.data.UserRepository
+import kotlinx.coroutines.launch
 
 class UserViewModel(private val userRepository: UserRepository): ViewModel() {
     val userData: LiveData<User> = userRepository.currentUserData.asLiveData()
+
+    val userHistory: LiveData<List<User>> = userRepository.userHistory.asLiveData()
+
+    fun insert(user: User){
+        viewModelScope.launch {
+            userRepository.insert(user)
+        }
+    }
+
+    fun update(user: User){
+        viewModelScope.launch {
+            userRepository.update(user)
+        }
+    }
 
 }
 

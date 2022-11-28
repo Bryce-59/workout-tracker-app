@@ -2,20 +2,55 @@ package com.example.android.finalproject.ui
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.example.android.finalproject.R
+import com.example.android.finalproject.model.WorkoutsApplication
+import com.example.android.finalproject.model.user.User
+import com.example.android.finalproject.model.user.UserViewModel
+import com.example.android.finalproject.model.user.UserViewModelFactory
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
-class MeasurementDialog: DialogFragment() {
+class MeasurementDialog : DialogFragment() {
+
+    private lateinit var listener: MeasurementDialogListener
+
+    interface MeasurementDialogListener {
+        fun onDialogPositiveClick(dialog: DialogFragment, view: View)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // Verify that the host activity implements the callback interface
+        try {
+            // Instantiate the NoticeDialogListener so we can send events to the host
+            listener = requireParentFragment() as MeasurementDialogListener
+        } catch (e: ClassCastException) {
+            // The activity doesn't implement the interface, throw exception
+            throw ClassCastException((context.toString() +
+                    " must implement DialogListener"))
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
+            val dialogView = inflater.inflate(R.layout.dialog_measurement_data, null)
             builder
-                .setView(inflater.inflate(R.layout.dialog_measurement_data, null))
+                .setView(dialogView)
                 .setPositiveButton("Save") { dialog, id ->
-
+                    listener.onDialogPositiveClick(this, dialogView)
                 }
                 .setNegativeButton("Cancel") { _, _ ->
                     dialog?.cancel()

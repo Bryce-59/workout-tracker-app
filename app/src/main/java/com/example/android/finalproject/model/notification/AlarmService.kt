@@ -16,8 +16,8 @@ class AlarmService : Service() {
     private var vibrator: Vibrator? = null
     override fun onCreate() {
         super.onCreate()
-        mediaPlayer = MediaPlayer.create(this, R.raw.alarm)
-        mediaPlayer!!.isLooping = true
+        //mediaPlayer = MediaPlayer.create(this, R.raw.alarm)
+        //mediaPlayer!!.isLooping = true
         vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
     }
 
@@ -31,7 +31,7 @@ class AlarmService : Service() {
             .setSmallIcon(R.drawable.ic_alarm_black_24dp)
             .setContentIntent(pendingIntent)
             .build()
-        mediaPlayer!!.start()
+        // mediaPlayer!!.start()
         val pattern = longArrayOf(0, 100, 1000)
         vibrator!!.vibrate(pattern, 0)
         startForeground(1, notification)
@@ -40,7 +40,7 @@ class AlarmService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer!!.stop()
+        // mediaPlayer!!.stop()
         vibrator!!.cancel()
     }
 

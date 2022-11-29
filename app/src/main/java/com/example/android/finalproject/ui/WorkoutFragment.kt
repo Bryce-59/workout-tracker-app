@@ -63,10 +63,7 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         val curWorkout = viewHolder?.workout
 
         if (view_code == 0) {
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink ,it.date) }
-            if (workoutInfo != null) {
-                Log.d("myTag", workoutInfo[0])
-            };
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink ,it.date, it.calories.toString()) }
 
             val intent = Intent(this@WorkoutFragment.context, NewWorkoutActivity::class.java)
             intent.putExtra(NewWorkoutActivity.SEARCH_REPLY, workoutInfo)
@@ -90,12 +87,12 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
                 Log.d("myTag", reply[0]);
-                val workout = Workout(0, reply[0], reply[1], reply[2], reply[4], reply[5])
+                val workout = Workout(0, reply[0], reply[1], reply[2], reply[4], reply[5], reply[6].toInt())
                 workoutViewModel.insert(workout)
             }
         }else if (requestCode == repalceWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
-                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2], reply[4], reply[5])
+                val workout = Workout(reply[3].toInt(), reply[0], reply[1], reply[2], reply[4], reply[5], reply[6].toInt())
                 workoutViewModel.update(workout)
             }
         } else {

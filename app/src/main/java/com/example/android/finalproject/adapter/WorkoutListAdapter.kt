@@ -38,7 +38,8 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
         holder.bind("Name: " + current.workoutName + "\n" +
                 "Workout Date: " + current.date +  "\n" +
                 "Start Time: " + current.startTime + "\n" +
-                "End Time: " + current.endTime, current)
+                "End Time: " + current.endTime + "\n" +
+                "Calories burn: " + current.calories, current)
     }
 
     class WordViewHolder(itemView: View, nodeLister: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
@@ -46,7 +47,7 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
         private val videoImage: ImageView = itemView.findViewById(R.id.playVideo)
         private val deleteImage: ImageView = itemView.findViewById(R.id.delete )
         private val listener: OnItemClickListener = nodeLister
-        var workout: Workout = Workout(0,"", "", "", "", "")
+        var workout: Workout = Workout(0,"", "", "", "", "", 0)
         init {
             itemView.setOnClickListener(this)
             videoImage.setOnClickListener(this)

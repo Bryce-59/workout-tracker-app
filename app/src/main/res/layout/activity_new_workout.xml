@@ -17,9 +17,9 @@ limitations under the License. -->
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <EditText
@@ -41,6 +41,17 @@ limitations under the License. -->
         android:fontFamily="sans-serif-light"
         android:hint="Paste in Video Link"
         android:inputType="textAutoComplete"
+        android:minHeight="@dimen/min_height"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/calories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_padding"
+        android:fontFamily="sans-serif-light"
+        android:hint="calories burn"
+        android:inputType="number"
         android:minHeight="@dimen/min_height"
         android:textSize="18sp" />
 

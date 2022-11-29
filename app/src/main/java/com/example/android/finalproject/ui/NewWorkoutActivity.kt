@@ -43,6 +43,7 @@ class NewWorkoutActivity : AppCompatActivity() {
         val startTime = findViewById<TimePicker>(R.id.startTimePicker)
         val endTime = findViewById<TimePicker>(R.id.endTimePicker)
         var workoutDate = findViewById<DatePicker>(R.id.startDatePicker)
+        var caloriesBurn = findViewById<EditText>(R.id.calories)
 
         if (workoutInfo != null) {
             if (workoutInfo.size == 4)
@@ -58,6 +59,7 @@ class NewWorkoutActivity : AppCompatActivity() {
             endTime.minute = Integer.parseInt(curEndTime[1])
             val curDate = workoutInfo[5].split("-")
             workoutDate.updateDate(Integer.parseInt(curDate[0]), Integer.parseInt(curDate[1]), Integer.parseInt(curDate[2]))
+            caloriesBurn.setText(workoutInfo[6], TextView.BufferType.EDITABLE)
         }
 
 
@@ -83,7 +85,9 @@ class NewWorkoutActivity : AppCompatActivity() {
 
                 var curDate = workoutDate.year.toString() + "-" + workoutDate.month.toString() + "-" + workoutDate.dayOfMonth.toString()
 
-                var newWorkout = arrayOf(workout, startTimeStr, endTimeStr, id, curLink, curDate)
+                var calories = caloriesBurn.text.toString()
+
+                var newWorkout = arrayOf(workout, startTimeStr, endTimeStr, id, curLink, curDate, calories)
                 replyIntent.putExtra(EXTRA_REPLY, newWorkout)
                 Log.d("startime", startTimeStr)
                 setResult(Activity.RESULT_OK, replyIntent)

@@ -40,4 +40,5 @@ data class Workout(
     val endTime: String,
     val videoLink: String,
     val date: String,
+    val calories: Int,
     )

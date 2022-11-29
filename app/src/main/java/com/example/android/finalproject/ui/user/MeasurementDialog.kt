@@ -1,25 +1,12 @@
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.user
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import com.example.android.finalproject.R
-import com.example.android.finalproject.model.WorkoutsApplication
-import com.example.android.finalproject.model.user.User
-import com.example.android.finalproject.model.user.UserViewModel
-import com.example.android.finalproject.model.user.UserViewModelFactory
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.*
 
 class MeasurementDialog(private val type: Int) : DialogFragment() {
 

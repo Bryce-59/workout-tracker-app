@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.finalproject">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
-        android:name="com.example.android.finalproject.model.WorkoutsApplication"
+        android:name="com.example.android.finalproject.WorkoutsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,10 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.android.finalproject.ui.Video" />
-        <activity android:name="com.example.android.finalproject.ui.NewWorkoutActivity" />
-        <activity android:name="com.example.android.finalproject.ui.NotificationActivity" />
-        <activity android:name="com.example.android.finalproject.ui.NewNotificationActivity" />
-    </application>
+        <activity android:name="com.example.android.finalproject.ui.notification.Video" />
+        <activity android:name="com.example.android.finalproject.ui.workout.NewWorkoutActivity" />
+        <activity android:name="com.example.android.finalproject.ui.notification.NewNotificationActivity" />
 
+    </application>
 </manifest>

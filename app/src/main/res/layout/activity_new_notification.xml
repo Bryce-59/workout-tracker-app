@@ -14,82 +14,138 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:text="Select Start Time" />
-
-    <TimePicker
-        android:id="@+id/startTimePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:timePickerMode="spinner" />
-
-    <Switch
-        android:id="@+id/monday"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Monday" />
+        android:layout_height="match_parent">
 
-    <Switch
-        android:id="@+id/tuesday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tuesday" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Notification"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
-        android:id="@+id/wednesday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wednesday" />
+        <LinearLayout
+            android:id="@+id/pickTimeGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/days_of_the_week"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text">
 
-    <Switch
-        android:id="@+id/thursday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thursday" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.4"
+                android:text="Notification Time"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-    <Switch
-        android:id="@+id/friday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Friday" />
+            <TimePicker
+                android:id="@+id/pickTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.6"
+                android:timePickerMode="spinner" />
+        </LinearLayout>
 
-    <Switch
-        android:id="@+id/saturday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Saturday" />
+        <CheckBox
+            android:id="@+id/repeated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Repeat Weekly"
+            app:layout_constraintBottom_toTopOf="@+id/saveButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/days_of_the_week" />
 
-    <Switch
-        android:id="@+id/sunday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sunday" />
+        <LinearLayout
+            android:id="@+id/days_of_the_week"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/repeated"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pickTimeGroup">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Repeat weekly?" />
+            <CheckBox
+                android:id="@+id/sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sun"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
-    <ToggleButton
-        android:id="@+id/weekly_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <CheckBox
+                android:id="@+id/monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mon"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/button_save"
-        android:textColor="@color/buttonLabel" />
+            <CheckBox
+                android:id="@+id/tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tue"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+            <CheckBox
+                android:id="@+id/wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wed"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+            <CheckBox
+                android:id="@+id/thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+            <CheckBox
+                android:id="@+id/friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fri"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+            <CheckBox
+                android:id="@+id/saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sat"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="SAVE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/repeated" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

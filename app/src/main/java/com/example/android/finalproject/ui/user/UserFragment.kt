@@ -1,4 +1,4 @@
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import com.example.android.finalproject.databinding.FragmentUserBinding
 import com.example.android.finalproject.model.user.User
 import com.example.android.finalproject.model.user.UserViewModel
 import com.example.android.finalproject.model.user.UserViewModelFactory
-import com.example.android.finalproject.model.WorkoutsApplication
+import com.example.android.finalproject.WorkoutsApplication
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.pow

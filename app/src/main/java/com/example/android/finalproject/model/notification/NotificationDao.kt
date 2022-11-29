@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.model.workout
+package com.example.android.finalproject.model.notification
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.example.android.finalproject.model.workout.Workout
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.example.android.finalproject.model.notification.Notification
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -33,25 +31,28 @@ import kotlinx.coroutines.flow.Flow
  */
 
 @Dao
-interface NotificationDao {
+open interface NotificationDao {
 
     // The flow always holds/caches latest version of data. Notifies its observers when the
     // data has changed.
-    @Query("SELECT * FROM notification_table ORDER BY id ASC")
+    @Query("SELECT * FROM notification_table ORDER BY notiId ASC")
     fun getAlphabetizedWords(): Flow<List<Notification>>
 
-    @Query("SELECT * FROM notification_table WHERE id = :index LIMIT 1")
+    @Query("SELECT * FROM notification_table WHERE notiId = :index LIMIT 1")
     fun getEntryById(index:Int): Flow<Notification>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(notification: Notification)
 
-    @Query("UPDATE notification_table SET day_of_week=:day_of_week, start_time=:start_time, weekly=:weekly WHERE id = :index")
-    suspend fun update(day_of_week: String, start_time:String, weekly:String, index: Int)
+    @Query("SELECT * FROM notification_table ORDER BY time_created ASC")
+    fun getAlarms(): LiveData<List<Notification?>?>?
+
+    @Update
+    fun update(notification: Notification)
 
     @Query("DELETE FROM notification_table")
     suspend fun deleteAll()
 
-    @Query("DELETE FROM notification_table where id=:id")
-    suspend fun deleteNotification(id: Int)
+    @Query("DELETE FROM notification_table where notiId=:id")
+    fun deleteNotification(id: Int)
 }

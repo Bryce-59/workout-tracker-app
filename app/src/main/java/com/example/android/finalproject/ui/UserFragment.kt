@@ -86,12 +86,12 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
         val dateString = SimpleDateFormat("yyyy-MM-dd")
             .format(calendar.time)
 
-        val weight =
-            view.findViewById<EditText>(R.id.user_weight).text.toString().toDouble()
+        val weightText =
+            view.findViewById<EditText>(R.id.user_weight).text.toString()
         val feet = view.findViewById<EditText>(R.id.user_height_ft).text.toString()
         val inch = view.findViewById<EditText>(R.id.user_height_inch).text.toString()
 
-
+        val weight = weightText.toDouble()
         if (type == TYPE_CREATE) {
             val user = User(
                 weight = weight,
@@ -108,7 +108,6 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
             )
             userViewModel.update(user)
         }
-
     }
 
     companion object{

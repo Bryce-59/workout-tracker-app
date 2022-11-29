@@ -4,7 +4,11 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.DialogInterface.BUTTON_POSITIVE
+import android.content.DialogInterface.OnShowListener
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -56,7 +60,35 @@ class MeasurementDialog(private val type: Int) : DialogFragment() {
                     dialog?.cancel()
                 }
 
-            builder.create()
+            val dialog = builder.create()
+            dialog.setOnShowListener {
+                val button = dialog.getButton(BUTTON_POSITIVE)
+                button.isEnabled = false
+                val editWeight = dialogView.findViewById<EditText>(R.id.user_weight)
+                val editHeightFt = dialogView.findViewById<EditText>(R.id.user_height_ft)
+                val editHeightIn = dialogView.findViewById<EditText>(R.id.user_height_inch)
+
+                val textWatcher = object: TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                        button.isEnabled =
+                            !(editWeight.text.isEmpty() || editHeightFt.text.isEmpty() || editHeightIn.text.isEmpty())
+                                    && !(editWeight.text.toString().toDouble() < 1
+                                    || editHeightFt.text.toString().toInt() < 1
+                                    || editHeightIn.text.toString().toInt() < 1)
+                    }
+
+                }
+                editWeight.addTextChangedListener(textWatcher)
+                editHeightFt.addTextChangedListener(textWatcher)
+                editHeightIn.addTextChangedListener(textWatcher)
+            }
+            dialog
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 }

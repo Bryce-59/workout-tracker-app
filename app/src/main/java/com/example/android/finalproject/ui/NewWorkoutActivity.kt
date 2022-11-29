@@ -58,7 +58,7 @@ class NewWorkoutActivity : AppCompatActivity() {
             endTime.hour = Integer.parseInt(curEndTime[0])
             endTime.minute = Integer.parseInt(curEndTime[1])
             val curDate = workoutInfo[5].split("-")
-            workoutDate.updateDate(Integer.parseInt(curDate[0]), Integer.parseInt(curDate[1]), Integer.parseInt(curDate[2]))
+            workoutDate.updateDate(Integer.parseInt(curDate[0]), Integer.parseInt(curDate[1]) - 1, Integer.parseInt(curDate[2]))
             caloriesBurn.setText(workoutInfo[6], TextView.BufferType.EDITABLE)
         }
 
@@ -79,11 +79,11 @@ class NewWorkoutActivity : AppCompatActivity() {
                 if (endTime.minute < 10) {
                     endTimeStr += "0"
                 }
-                endTimeStr += startTime.minute.toString()
+                endTimeStr += endTime.minute.toString()
 
                 val curLink = videoLink.text.toString()
 
-                var curDate = workoutDate.year.toString() + "-" + workoutDate.month.toString() + "-" + workoutDate.dayOfMonth.toString()
+                var curDate = workoutDate.year.toString() + "-" + (workoutDate.month + 1).toString() + "-" + workoutDate.dayOfMonth.toString()
 
                 var calories = caloriesBurn.text.toString()
 

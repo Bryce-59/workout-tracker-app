@@ -40,13 +40,13 @@ class NotificationRepository(application : Application ) {
         }
     }
 
-    fun update(alarm: Notification?) {
+    suspend fun update(alarm: Notification?) {
         if (alarm != null) {
             notifiDao?.update(alarm)
         }
     }
 
-    fun delete(id: Int) {
+    suspend fun delete(id: Int) {
         notifiDao?.deleteNotification(id)
     }
 

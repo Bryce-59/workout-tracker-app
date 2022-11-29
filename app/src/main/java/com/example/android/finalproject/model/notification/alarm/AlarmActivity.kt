@@ -5,26 +5,21 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.example.android.finalproject.R
+import com.example.android.finalproject.model.notification.alarm.AlarmService
 import java.util.*
 
 class RingActivity : AppCompatActivity() {
-    @BindView(R.id.activity_ring_dismiss)
-    var dismiss: Button? = null
-
-    @BindView(R.id.activity_ring_snooze)
-    var snooze: Button? = null
-
-    @BindView(R.id.activity_ring_clock)
-    var clock: ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
+        val dismiss: Button? = findViewById(R.id.activity_ring_dismiss)
+        val snooze: Button? = findViewById(R.id.activity_ring_snooze)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ring)
-        ButterKnife.bind(this)
         dismiss!!.setOnClickListener {
             val intentService = Intent(applicationContext, AlarmService::class.java)
             applicationContext.stopService(intentService)
@@ -58,6 +53,7 @@ class RingActivity : AppCompatActivity() {
     }
 
     private fun animateClock() {
+        val clock: ImageView? = findViewById(R.id.activity_ring_clock)
         val rotateAnimation = ObjectAnimator.ofFloat(clock, "rotation", 0f, 20f, 0f, -20f, 0f)
         rotateAnimation.repeatCount = ValueAnimator.INFINITE
         rotateAnimation.duration = 800

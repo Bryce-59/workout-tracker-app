@@ -1,4 +1,4 @@
-package com.example.android.finalproject.model.notification
+package com.example.android.finalproject.model.notification.alarm
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import com.example.android.finalproject.R
+import com.example.android.finalproject.model.notification.RingActivity
 
 
 class AlarmService : Service() {

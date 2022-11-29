@@ -32,7 +32,7 @@ package com.example.android.finalproject.ui.notification
 //import androidx.recyclerview.widget.RecyclerView
 //import com.example.android.finalproject.*
 //import com.example.android.finalproject.databinding.ActivityNotificationBinding
-//import com.example.android.finalproject.model.notification.AlarmReceiver
+//import com.example.android.finalproject.model.notification.Alarm.AlarmReceiver
 //import com.example.android.finalproject.model.notification.Notification
 //import com.example.android.finalproject.model.notification.NotificationViewHolder
 //import com.example.android.finalproject.model.notification.NotificationViewModel

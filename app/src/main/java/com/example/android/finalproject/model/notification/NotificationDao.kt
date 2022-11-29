@@ -48,11 +48,11 @@ open interface NotificationDao {
     fun getAlarms(): LiveData<List<Notification?>?>?
 
     @Update
-    fun update(notification: Notification)
+    suspend fun update(notification: Notification)
 
     @Query("DELETE FROM notification_table")
     suspend fun deleteAll()
 
     @Query("DELETE FROM notification_table where notiId=:id")
-    fun deleteNotification(id: Int)
+    suspend fun deleteNotification(id: Int)
 }

@@ -1,7 +1,6 @@
 package com.example.android.finalproject.ui.user
 
 import android.app.AlertDialog
-import java.util.concurrent.TimeUnit
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

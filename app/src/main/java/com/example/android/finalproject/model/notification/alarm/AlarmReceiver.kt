@@ -1,4 +1,4 @@
-package com.example.android.finalproject.model.notification
+package com.example.android.finalproject.model.notification.alarm
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -10,6 +10,8 @@ import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        val toastText = String.format("There was a signal")
+        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
         if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
             val toastText = String.format("Alarm Reboot")
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
@@ -34,25 +36,25 @@ class AlarmReceiver : BroadcastReceiver() {
         val today = calendar[Calendar.DAY_OF_WEEK]
         when (today) {
             Calendar.SUNDAY -> {
-                return if (intent.getBooleanExtra(SUN, false)) true else false
+                return intent.getBooleanExtra(SUN, false)
             }
             Calendar.MONDAY -> {
-                return if (intent.getBooleanExtra(MON, false)) true else false
+                return intent.getBooleanExtra(MON, false)
             }
             Calendar.TUESDAY -> {
-                return if (intent.getBooleanExtra(TUE, false)) true else false
+                return intent.getBooleanExtra(TUE, false)
             }
             Calendar.WEDNESDAY -> {
-                return if (intent.getBooleanExtra(WED, false)) true else false
+                return intent.getBooleanExtra(WED, false)
             }
             Calendar.THURSDAY -> {
-                return if (intent.getBooleanExtra(THU, false)) true else false
+                return intent.getBooleanExtra(THU, false)
             }
             Calendar.FRIDAY -> {
-                return if (intent.getBooleanExtra(FRI, false)) true else false
+                return intent.getBooleanExtra(FRI, false)
             }
             Calendar.SATURDAY -> {
-                return if (intent.getBooleanExtra(SAT, false)) true else false
+                return intent.getBooleanExtra(SAT, false)
             }
         }
         return false

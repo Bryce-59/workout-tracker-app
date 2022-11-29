@@ -72,7 +72,6 @@ class NewNotificationActivity : AppCompatActivity() {
             timePicker!!.minute,
             System.currentTimeMillis(),
             true,
-            recurring!!.isChecked,
             sun!!.isChecked,
             mon!!.isChecked,
             tue!!.isChecked,
@@ -80,8 +79,15 @@ class NewNotificationActivity : AppCompatActivity() {
             thu!!.isChecked,
             fri!!.isChecked,
             sat!!.isChecked,
+            recurring!!.isChecked,
         )
         createAlarmViewModel?.insert(notification)
         notification.schedule(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
+
     }
 }

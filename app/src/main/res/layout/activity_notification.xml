@@ -26,36 +26,31 @@ So, we are leaving the template code in. -->
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/fab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:text="ADD NEW SCHEDULE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_not" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_not"
         android:layout_width="378dp"
         android:layout_height="444dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="84dp"
         android:padding="@dimen/big_padding"
-        app:layout_constraintBottom_toTopOf="@+id/fab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999"
         tools:listitem="@layout/recyclerview_notification" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:contentDescription="@string/schedule_word"
-        android:src="@drawable/ic_add_black_24dp"
-        app:fabCustomSize="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.80"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview_not"
-        app:layout_constraintVertical_bias="0.20"
-        app:maxImageSize="90dp" />
 
     <TextView
         android:id="@+id/textView"

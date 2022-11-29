@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.finalproject.model.notification.Notification
 import com.example.android.finalproject.model.notification.NotificationViewHolder
-import com.example.android.finalproject.model.notification.OnToggleAlarmListener
+import com.example.android.finalproject.model.notification.alarm.OnToggleAlarmListener
 
-class NotificationListAdapter(listener: OnToggleAlarmListener) :
+class NotificationListAdapter(listener: OnToggleAlarmListener, private val nodeListener: NotificationViewHolder.OnItemClickListener) :
     RecyclerView.Adapter<NotificationViewHolder>() {
     private var notifications: List<Notification?>
     private val listener: OnToggleAlarmListener
@@ -21,7 +21,7 @@ class NotificationListAdapter(listener: OnToggleAlarmListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val itemView: View =
             LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_notification, parent, false)
-        return NotificationViewHolder(itemView, listener)
+        return NotificationViewHolder(itemView, listener, nodeListener)
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
@@ -49,4 +49,6 @@ class NotificationListAdapter(listener: OnToggleAlarmListener) :
         notifications = alarms
         notifyDataSetChanged()
     }
+
+
 }

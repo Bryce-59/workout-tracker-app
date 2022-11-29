@@ -32,20 +32,21 @@ import com.example.android.finalproject.databinding.FragmentNotificationBinding
 import com.example.android.finalproject.model.notification.Notification
 import com.example.android.finalproject.model.notification.NotificationViewHolder
 import com.example.android.finalproject.model.notification.NotificationViewModel
-import com.example.android.finalproject.model.notification.OnToggleAlarmListener
+import com.example.android.finalproject.model.notification.alarm.OnToggleAlarmListener
 
 /**
  * Activity for entering a word.
  */
 
-class NotificationFragment : Fragment(), WordListAdapter.OnItemClickListener, OnToggleAlarmListener {
+class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListener,
+    OnToggleAlarmListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
     private val newNotiActivityRequestCode = 1
     private lateinit var notificationViewModel: NotificationViewModel
 
-    private var adapter = NotificationListAdapter(this)
+    private var adapter = NotificationListAdapter(this, this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,13 +101,16 @@ class NotificationFragment : Fragment(), WordListAdapter.OnItemClickListener, On
         val recyclerView = binding.recyclerview
         var viewHolder: NotificationViewHolder =
             recyclerView.findViewHolderForAdapterPosition(position) as NotificationViewHolder;
+        val curNotification = viewHolder?.getNotification()
 
-        if (view_code == 3){
-            val current = viewHolder.getNotification()
-            if (current != null) {
-                this.context?.let { current.cancelAlarm(it) }
-                notificationViewModel.delete(current)
-            }
+        if (view_code == 3 && curNotification != null){
+            this.context?.let { curNotification.cancelAlarm(it) }
+            notificationViewModel.delete(curNotification)
+            Toast.makeText(
+                this.context,
+                "Notification deleted",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 

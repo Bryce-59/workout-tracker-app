@@ -18,20 +18,22 @@ package com.example.android.finalproject.model.notification
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.FRI
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.MON
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.RPT
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.SAT
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.SUN
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.THU
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.TUE
-import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.WED
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.FRI
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.MON
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.RPT
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.SAT
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.SUN
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.THU
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.TUE
+import com.example.android.finalproject.model.notification.alarm.AlarmReceiver.Companion.WED
 import java.util.*
 
 @Entity(tableName = "notification_table")
@@ -68,7 +70,7 @@ data class Notification(
         intent.putExtra(FRI, fri)
         intent.putExtra(SAT, sat)
         intent.putExtra(RPT, weekly)
-        val alarmPendingIntent = PendingIntent.getBroadcast(context, notiId, intent, 0)
+        val alarmPendingIntent = PendingIntent.getBroadcast(context, notiId, intent, FLAG_IMMUTABLE)
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         calendar[Calendar.HOUR_OF_DAY] = hour
@@ -110,7 +112,7 @@ data class Notification(
     fun cancelAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        val alarmPendingIntent = PendingIntent.getBroadcast(context, notiId, intent, 0)
+        val alarmPendingIntent = PendingIntent.getBroadcast(context, notiId, intent, FLAG_IMMUTABLE)
         alarmManager.cancel(alarmPendingIntent)
         this.active = false
         val toastText =

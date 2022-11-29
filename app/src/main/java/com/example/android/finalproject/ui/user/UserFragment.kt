@@ -1,4 +1,4 @@
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.user
 
 import android.app.AlertDialog
 import java.util.concurrent.TimeUnit
@@ -12,11 +12,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.android.finalproject.R
+import com.example.android.finalproject.WorkoutsApplication
 import com.example.android.finalproject.databinding.FragmentUserBinding
 import com.example.android.finalproject.model.user.User
 import com.example.android.finalproject.model.user.UserViewModel
 import com.example.android.finalproject.model.user.UserViewModelFactory
-import com.example.android.finalproject.model.WorkoutsApplication
 import com.example.android.finalproject.model.workout.Workout
 import java.text.SimpleDateFormat
 import java.util.*

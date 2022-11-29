@@ -38,7 +38,7 @@ class WorkoutsApplication : Application() {
     private val databaseW by lazy { WorkoutRoomDatabase.getDatabase(this, applicationScope) }
     private val userDatabase by lazy { UserDatabase.getDatabase(this, applicationScope) }
     val repositoryW by lazy { WorkoutRepository(databaseW.wordDao()) }
-    val userRepository by lazy { UserRepository(userDatabase.userDao()) }
+    val userRepository by lazy { UserRepository(userDatabase.userDao(), databaseW.wordDao()) }
 
     override fun onCreate() {
         super.onCreate()

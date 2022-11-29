@@ -14,30 +14,138 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.model.workout
+package com.example.android.finalproject.model.notification
 
-import androidx.room.ColumnInfo
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import android.widget.Toast
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-/**
- * A basic class representing an entity that is a row in a one-column database table.
- *
- * @ Entity - You must annotate the class as an entity and supply a table name if not class name.
- * @ PrimaryKey - You must identify the primary key.
- * @ ColumnInfo - You must supply the column name if it is different from the variable name.
- *
- * See the documentation for the full rich set of annotations.
- * https://developer.android.com/topic/libraries/architecture/room.html
- */
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.FRI
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.MON
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.RPT
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.SAT
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.SUN
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.THU
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.TUE
+import com.example.android.finalproject.model.notification.AlarmReceiver.Companion.WED
+import java.util.*
 
 @Entity(tableName = "notification_table")
 data class Notification(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val day_of_week: String,
-    val start_time: String,
+    val notiId: Int,
+
+    val hour: Int,
+    val minute: Int,
+
+    val time_created: Long,
+
+    var active: Boolean,
+
+    val sun: Boolean,
+    val mon: Boolean,
+    val tues: Boolean,
+    val wed: Boolean,
+    val thurs: Boolean,
+    val fri: Boolean,
+    val sat: Boolean,
+
     val weekly: Boolean,
+) {
 
-)
+    fun schedule(context: Context) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlarmReceiver::class.java)
+        intent.putExtra(SUN, sun)
+        intent.putExtra(MON, mon)
+        intent.putExtra(TUE, tues)
+        intent.putExtra(WED, wed)
+        intent.putExtra(THU, thurs)
+        intent.putExtra(FRI, fri)
+        intent.putExtra(SAT, sat)
+        intent.putExtra(RPT, weekly)
+        val alarmPendingIntent = PendingIntent.getBroadcast(context, notiId, intent, 0)
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar[Calendar.HOUR_OF_DAY] = hour
+        calendar[Calendar.MINUTE] = minute
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
 
+        // if alarm time has already passed, increment day by 1
+        if (calendar.timeInMillis <= System.currentTimeMillis()) {
+            calendar[Calendar.DAY_OF_MONTH] = calendar[Calendar.DAY_OF_MONTH] + 1
+        }
+        if (!weekly) {
+            var toastText: String? = null
+            try {
+                toastText = java.lang.String.format("Workout Notification set")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+            alarmManager.setExact(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                alarmPendingIntent
+            )
+        } else {
+            val toastText = String.format("Recurring Workout Notification set")
+            Toast.makeText(context, toastText, Toast.LENGTH_LONG).show()
+            val RUN_DAILY = (24 * 60 * 60 * 1000).toLong()
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                RUN_DAILY,
+                alarmPendingIntent
+            )
+        }
+        this.active = true
+    }
+
+    fun cancelAlarm(context: Context) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlarmReceiver::class.java)
+        val alarmPendingIntent = PendingIntent.getBroadcast(context, notiId, intent, 0)
+        alarmManager.cancel(alarmPendingIntent)
+        this.active = false
+        val toastText =
+            String.format("Notification cancelled", hour, minute, notiId)
+        Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
+        Log.i("cancel", toastText)
+    }
+
+    fun getRecurringDaysText(): String? {
+        if (!active) {
+            return null
+        }
+
+        var days = ""
+        if (sun) {
+            days += "Su"
+        }
+        if (mon) {
+            days += "M"
+        }
+        if (tues) {
+            days += "Tu"
+        }
+        if (wed) {
+            days += "We"
+        }
+        if (thurs) {
+            days += "Th"
+        }
+        if (fri) {
+            days += "F"
+        }
+        if (sat) {
+            days += "Sa"
+        }
+        return days
+    }
+}

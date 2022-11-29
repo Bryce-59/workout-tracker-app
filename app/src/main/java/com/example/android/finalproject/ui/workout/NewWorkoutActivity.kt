@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.workout
 
 import android.app.Activity
 import android.content.Intent

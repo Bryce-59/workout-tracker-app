@@ -15,6 +15,10 @@ class UserRepository(private val userDao: UserDao, private val workoutDao: Worko
 
     val workoutHistory: Flow<List<Workout>> = workoutDao.getAlphabetizedWords()
 
+    fun getWorkoutByDate(date: String): Flow<List<Workout>> {
+        return workoutDao.getWorkoutByDate(date)
+    }
+
 
     @WorkerThread
     suspend fun insert(user: User){

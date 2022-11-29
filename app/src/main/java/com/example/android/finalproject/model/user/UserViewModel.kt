@@ -3,7 +3,6 @@ package com.example.android.finalproject.model.user
 import androidx.lifecycle.*
 import com.example.android.finalproject.data.UserRepository
 import com.example.android.finalproject.model.workout.Workout
-import com.example.android.finalproject.model.workout.WorkoutRepository
 import kotlinx.coroutines.launch
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -12,6 +11,10 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     val userHistory: LiveData<List<User>> = userRepository.userHistory.asLiveData()
 
     val workoutHistory: LiveData<List<Workout>> = userRepository.workoutHistory.asLiveData()
+
+    fun getWorkoutToday(date: String): LiveData<List<Workout>> {
+        return userRepository.getWorkoutByDate(date).asLiveData()
+    }
 
     fun insert(user: User){
         viewModelScope.launch {

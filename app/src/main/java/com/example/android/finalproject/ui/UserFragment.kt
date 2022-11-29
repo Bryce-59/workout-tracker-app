@@ -1,6 +1,7 @@
 package com.example.android.finalproject.ui
 
 import android.app.AlertDialog
+import java.util.concurrent.TimeUnit
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,18 +9,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navArgs
-import androidx.navigation.fragment.navArgs
-import com.example.android.finalproject.MainActivity
 import com.example.android.finalproject.R
 import com.example.android.finalproject.databinding.FragmentUserBinding
 import com.example.android.finalproject.model.user.User
 import com.example.android.finalproject.model.user.UserViewModel
 import com.example.android.finalproject.model.user.UserViewModelFactory
 import com.example.android.finalproject.model.WorkoutsApplication
+import com.example.android.finalproject.model.workout.Workout
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.pow
@@ -33,6 +31,7 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
     }
 
     private lateinit var user: User
+    private lateinit var workouts: List<Workout>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,24 +55,49 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
                 }
             }
         }
-        userViewModel.workoutHistory.observe(viewLifecycleOwner) { workout ->
-            if (workout.isEmpty()) {
+        userViewModel.workoutHistory.observe(viewLifecycleOwner) { history ->
+            if (history.isEmpty()) {
                 val builder = AlertDialog.Builder(requireContext())
                 builder
-                    .setMessage("No workout history")
+                    .setMessage("No workout history found, do you want to add them?")
                     .setPositiveButton("Take me there") { _, _ ->
                         findNavController().navigate(R.id.navigation_workout)
                     }
-                    .setNegativeButton("Later") {dialog, id ->
+                    .setNegativeButton("Later") {dialog, _ ->
                         dialog?.cancel()
                     }
 
                 builder.show()
+            }else {
+                val calendar = Calendar.getInstance()
+                val dateString = SimpleDateFormat("yyyy-MM-dd")
+                    .format(calendar.time)
+                userViewModel.getWorkoutToday(dateString).observe(viewLifecycleOwner){
+                    workouts = it
+                    println(dateString)
+                    println(workouts)
+                    bindWorkouts()
+                }
             }
         }
         binding.bodyMeasurementCard.setOnClickListener {
             val dialog = MeasurementDialog(TYPE_UPDATE)
             dialog.show(childFragmentManager, "MeasurementDialog")
+        }
+    }
+
+    private fun bindWorkouts() {
+        binding.apply {
+            var totalWorkoutTime = 0L
+            var totalCalories = 0
+            for (workout in workouts) {
+                val endTime = workout.endTime
+                val startTime = workout.startTime
+
+                totalCalories += workout.calories
+            }
+            binding.workoutTimeText.text = ""
+            binding.caloriesText.text = totalCalories.toString()
         }
     }
 

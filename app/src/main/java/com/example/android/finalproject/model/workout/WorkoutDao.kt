@@ -43,6 +43,9 @@ interface WorkoutDao {
     @Query("SELECT * FROM workout_table WHERE id = :index LIMIT 1")
     fun getEntryById(index:Int): Flow<Workout>
 
+    @Query("SELECT * FROM workout_table WHERE date = :date")
+    fun getWorkoutByDate(date: String): Flow<List<Workout>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(workout: Workout)
     @Query("UPDATE workout_table SET workoutName=:workoutName, startTime=:startTime, endTime=:EndTime, date=:date, videoLink=:videoLink, calories=:calories WHERE id = :index")

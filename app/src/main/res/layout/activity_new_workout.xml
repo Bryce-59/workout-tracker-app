@@ -14,12 +14,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License. -->
 
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-
 
     <EditText
         android:id="@+id/workout_name"
@@ -42,6 +43,17 @@ limitations under the License. -->
         android:inputType="textAutoComplete"
         android:minHeight="@dimen/min_height"
         android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Date Of Workout" />
+
+    <DatePicker
+        android:id="@+id/startDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner" />
 
     <TextView
         android:id="@+id/textView2"
@@ -76,3 +88,4 @@ limitations under the License. -->
         android:textColor="@color/buttonLabel" />
 
 </LinearLayout>
+</ScrollView>

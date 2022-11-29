@@ -36,6 +36,7 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val current = getItem(position)
         holder.bind("Name: " + current.workoutName + "\n" +
+                "Workout Date: " + current.date +  "\n" +
                 "Start Time: " + current.startTime + "\n" +
                 "End Time: " + current.endTime, current)
     }
@@ -43,14 +44,12 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
     class WordViewHolder(itemView: View, nodeLister: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         private val wordItemView: TextView = itemView.findViewById(R.id.workoutView)
         private val videoImage: ImageView = itemView.findViewById(R.id.playVideo)
-        private val musicImage: ImageView = itemView.findViewById(R.id.playMusic )
         private val deleteImage: ImageView = itemView.findViewById(R.id.delete )
         private val listener: OnItemClickListener = nodeLister
         var workout: Workout = Workout(0,"", "", "", "", "")
         init {
             itemView.setOnClickListener(this)
             videoImage.setOnClickListener(this)
-            musicImage.setOnClickListener(this)
             deleteImage.setOnClickListener(this)
         }
 
@@ -59,8 +58,6 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
             if (v != null) {
                 if (v.id == videoImage.id){
                     view_code = 1
-                }else if (v.id == musicImage.id){
-                    view_code = 2
                 }else if (v.id == deleteImage.id){
                     view_code = 3
                 }else{

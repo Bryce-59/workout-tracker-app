@@ -40,15 +40,6 @@ limitations under the License. -->
             android:src="@drawable/ic_baseline_ondemand_video_24" />
 
         <ImageView
-            android:id="@+id/playMusic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/workoutView"
-            android:layout_marginStart="120dp"
-            android:contentDescription="playMusic"
-            android:src="@drawable/ic_baseline_library_music_24" />
-
-        <ImageView
             android:id="@+id/delete"
             android:layout_width="50dp"
             android:layout_height="50dp"

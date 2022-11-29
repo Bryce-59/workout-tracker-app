@@ -63,7 +63,7 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
         val curWorkout = viewHolder?.workout
 
         if (view_code == 0) {
-            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink) }
+            var workoutInfo = curWorkout?.let { arrayOf(it.workoutName, it.startTime, it.endTime, it.id.toString(), it.videoLink ,it.date) }
             if (workoutInfo != null) {
                 Log.d("myTag", workoutInfo[0])
             };

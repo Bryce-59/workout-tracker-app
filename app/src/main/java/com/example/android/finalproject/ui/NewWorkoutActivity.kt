@@ -42,6 +42,7 @@ class NewWorkoutActivity : AppCompatActivity() {
         var workoutInfo : Array<out String>? = intent?.getStringArrayExtra(SEARCH_REPLY)
         val startTime = findViewById<TimePicker>(R.id.startTimePicker)
         val endTime = findViewById<TimePicker>(R.id.endTimePicker)
+        var workoutDate = findViewById<DatePicker>(R.id.startDatePicker)
 
         if (workoutInfo != null) {
             if (workoutInfo.size == 4)
@@ -55,6 +56,8 @@ class NewWorkoutActivity : AppCompatActivity() {
             val curEndTime = workoutInfo[2].split(":")
             endTime.hour = Integer.parseInt(curEndTime[0])
             endTime.minute = Integer.parseInt(curEndTime[1])
+            val curDate = workoutInfo[5].split("-")
+            workoutDate.updateDate(Integer.parseInt(curDate[0]), Integer.parseInt(curDate[1]), Integer.parseInt(curDate[2]))
         }
 
 
@@ -77,7 +80,10 @@ class NewWorkoutActivity : AppCompatActivity() {
                 endTimeStr += startTime.minute.toString()
 
                 val curLink = videoLink.text.toString()
-                var newWorkout = arrayOf(workout, startTimeStr, endTimeStr, id, curLink)
+
+                var curDate = workoutDate.year.toString() + "-" + workoutDate.month.toString() + "-" + workoutDate.dayOfMonth.toString()
+
+                var newWorkout = arrayOf(workout, startTimeStr, endTimeStr, id, curLink, curDate)
                 replyIntent.putExtra(EXTRA_REPLY, newWorkout)
                 Log.d("startime", startTimeStr)
                 setResult(Activity.RESULT_OK, replyIntent)

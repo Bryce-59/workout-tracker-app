@@ -2,6 +2,7 @@ package com.example.android.finalproject.ui.workout
 
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.finalproject.*
 import com.example.android.finalproject.databinding.FragmentWorkoutBinding
 import com.example.android.finalproject.model.workout.Workout
-import com.example.android.finalproject.WorkoutsApplication
 import com.example.android.finalproject.ui.notification.Video
 
 class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
@@ -89,7 +89,10 @@ class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
                 Log.d("myTag", reply[0]);
                 val workout = Workout(0, reply[0], reply[1], reply[2], reply[4], reply[5], reply[6].toInt())
+
                 workoutViewModel.insert(workout)
+                val mediaPlayer = MediaPlayer.create(this.context, R.raw.tada)
+                mediaPlayer.start()
             }
         }else if (requestCode == repalceWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->

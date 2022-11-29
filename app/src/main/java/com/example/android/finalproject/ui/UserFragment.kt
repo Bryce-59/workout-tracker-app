@@ -1,5 +1,6 @@
 package com.example.android.finalproject.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navArgs
+import androidx.navigation.fragment.navArgs
+import com.example.android.finalproject.MainActivity
 import com.example.android.finalproject.R
 import com.example.android.finalproject.databinding.FragmentUserBinding
 import com.example.android.finalproject.model.user.User
@@ -48,6 +54,21 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
                     this.user = it
                     bindUser()
                 }
+            }
+        }
+        userViewModel.workoutHistory.observe(viewLifecycleOwner) { workout ->
+            if (workout.isEmpty()) {
+                val builder = AlertDialog.Builder(requireContext())
+                builder
+                    .setMessage("No workout history")
+                    .setPositiveButton("Take me there") { _, _ ->
+                        findNavController().navigate(R.id.navigation_workout)
+                    }
+                    .setNegativeButton("Later") {dialog, id ->
+                        dialog?.cancel()
+                    }
+
+                builder.show()
             }
         }
         binding.bodyMeasurementCard.setOnClickListener {

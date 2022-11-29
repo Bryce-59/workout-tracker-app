@@ -1,4 +1,4 @@
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.notification
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,6 +9,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import android.util.Log
 import com.example.android.finalproject.R
+import com.example.android.finalproject.ui.workout.NewWorkoutActivity
 
 class Video : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

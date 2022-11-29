@@ -14,41 +14,36 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.notification
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.finalproject.*
-import com.example.android.finalproject.model.WorkoutsApplication
-import android.view.ViewGroup
-import android.widget.*
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import com.example.android.finalproject.databinding.FragmentNotificationBinding
-import com.example.android.finalproject.model.workout.Notification
-
+import com.example.android.finalproject.model.notification.Notification
+import com.example.android.finalproject.model.notification.NotificationViewHolder
+import com.example.android.finalproject.model.notification.NotificationViewModel
 /**
  * Activity for entering a word.
  */
 
-class NotificationFragment : Fragment(), NotiListAdapter.OnItemClickListener {
+class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
     private val newNotiActivityRequestCode = 1
-    private val repalceNotiActivityRequestCode = 2
+    private lateinit var notificationViewModel: NotificationViewModel
 
-    private val notificationViewModel: NotificationViewModel by viewModels {
-        NotiViewModelFactory((activity?.application as WorkoutsApplication).repositoryN)
-    }
-    private var adapter = NotiListAdapter(this)
+    private var adapter = NotificationListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,10 +68,13 @@ class NotificationFragment : Fragment(), NotiListAdapter.OnItemClickListener {
         val recyclerView = binding.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        notificationViewModel.allWords.observe(viewLifecycleOwner) { words ->
-            // Update the cached copy of the words in the adapter.
-            words.let { adapter.submitList(it) }
-        }
+        notificationViewModel = ViewModelProviders.of(this)[NotificationViewModel::class.java]
+        notificationViewModel.getAlarmsLiveData()?.observe(viewLifecycleOwner,
+            Observer<List<Any?>?> { alarms ->
+                if (alarms != null) {
+                    adapter.setAlarms(alarms as List<Notification?>)
+                }
+            })
     }
 
     companion object {
@@ -86,46 +84,29 @@ class NotificationFragment : Fragment(), NotiListAdapter.OnItemClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
-        Log.d("myTag", requestCode.toString())
-        Log.d("myTag", Activity.RESULT_OK.toString())
 
-        if (requestCode == newNotiActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            intentData?.getStringArrayExtra(NewNotificationActivity.EXTRA_REPLY)?.let { reply ->
-                val notification =  Notification(0, reply[0], reply[1], false)
-                notificationViewModel.insert(notification)
-            }
-        } else if (requestCode == repalceNotiActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            intentData?.getStringArrayExtra(NewWorkoutActivity.EXTRA_REPLY)?.let { reply ->
-                val notification = Notification(reply[3].toInt(), reply[0], reply[1], false)
-                notificationViewModel.update(notification)
-            }
-        } else {
+        if (requestCode != newNotiActivityRequestCode || resultCode != Activity.RESULT_OK) {
             Toast.makeText(
                 this.context,
-                "Notification not saved because it was empty",
+                "Notification cancelled",
                 Toast.LENGTH_LONG
             ).show()
         }
     }
 
     override fun onItemClick(position: Int, view_code: Int) {
-
         val recyclerView = binding.recyclerview
-        var viewHolder: NotiListAdapter.NotiViewHolder? =
-            recyclerView.findViewHolderForAdapterPosition(position) as NotiListAdapter.NotiViewHolder;
-        val curNotification = viewHolder?.notification
+        var viewHolder: NotificationViewHolder =
+            recyclerView.findViewHolderForAdapterPosition(position) as NotificationViewHolder;
+        val curNotification = viewHolder?.getNotification()
 
-        var notificationInfo = curNotification?.let { arrayOf(it.day_of_week, it.start_time, it.weekly) }
-        if (notificationInfo != null) {
-            Log.d("myTag", ""/*notificationInfo[0]*/)
-        };
-
-        if (view_code == 0) {
-            val intent = Intent(this@NotificationFragment.context, NewWorkoutActivity::class.java)
-            intent.putExtra(NewNotificationActivity.SEARCH_REPLY, notificationInfo)
-            startActivity(intent);
-        } else if (view_code == 3){
-            notificationViewModel.delete(curNotification!!.id)
+        if (view_code == 3 && curNotification != null){
+            notificationViewModel.delete(curNotification)
+            Toast.makeText(
+                this.context,
+                "Notification deleted",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 }

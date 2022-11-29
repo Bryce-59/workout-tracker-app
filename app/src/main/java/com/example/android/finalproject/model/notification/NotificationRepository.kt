@@ -13,43 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.finalproject.model.workout
+package com.example.android.finalproject.model.notification
 
+import android.app.Application
 import androidx.annotation.WorkerThread
-import com.example.android.finalproject.model.workout.Workout
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
 
 /**
  * Abstracted Repository as promoted by the Architecture Guide.
  * https://developer.android.com/topic/libraries/architecture/guide.html
  */
-class NotificationRepository(private val notificationDao: NotificationDao) {
 
-    // Room executes all queries on a separate thread.
-    // Observed Flow will notify the observer when the data has changed.
-    val allWords: Flow<List<Notification>> = notificationDao.getAlphabetizedWords()
+class NotificationRepository(application : Application ) {
+    private val notifiDao: NotificationDao?
+    private val alarmsLiveData: LiveData<List<Notification?>?>?
 
-    // By default Room runs suspend queries off the main thread, therefore, we don't need to
-    // implement anything else to ensure we're not doing long running database work
-    // off the main thread.
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(notification: Notification) {
-        notificationDao.insert(notification)
+    init {
+        var db: NotificationRoomDatabase? = NotificationRoomDatabase.getDatabase(application)
+        notifiDao = db?.notiDao()
+        alarmsLiveData = notifiDao?.getAlarms()
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun update(notification: Notification) {
-        notificationDao.update(notification.day_of_week, notification.start_time, notification.weekly.toString(), notification.id)
+   suspend fun insert(alarm: Notification?) {
+        if (alarm != null) {
+            notifiDao?.insert(alarm)
+        }
     }
-    @WorkerThread
+
+    suspend fun update(alarm: Notification?) {
+        if (alarm != null) {
+            notifiDao?.update(alarm)
+        }
+    }
+
     suspend fun delete(id: Int) {
-        notificationDao.deleteNotification(id)
+        notifiDao?.deleteNotification(id)
     }
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun search(id: Int) : Flow<Notification> {
-        return notificationDao.getEntryById(id)
+
+    fun getAlarmsLiveData(): LiveData<List<Notification?>?>? {
+        return alarmsLiveData
     }
 }

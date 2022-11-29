@@ -29,7 +29,7 @@ So, we are leaving the template code in. -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="378dp"
-        android:layout_height="444dp"
+        android:layout_height="400dp"
         android:layout_marginEnd="16dp"
         android:padding="@dimen/big_padding"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,23 +37,24 @@ So, we are leaving the template code in. -->
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.337"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.1"
         tools:listitem="@layout/recyclerview_notification" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginBottom="48dp"
         android:contentDescription="@string/schedule_word"
         android:src="@drawable/ic_add_black_24dp"
         app:fabCustomSize="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.90"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview_not"
-        app:layout_constraintVertical_bias="0.555"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview"
+        app:layout_constraintVertical_bias="0.80"
         app:maxImageSize="90dp" />
 
     <TextView
@@ -64,7 +65,6 @@ So, we are leaving the template code in. -->
         android:text="SCHEDULED WORKOUTS"
         android:textAlignment="center"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerview_not"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

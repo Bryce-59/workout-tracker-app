@@ -14,30 +14,65 @@
  * limitations under the License.
  */
 
-package com.example.android.finalproject.model.workout
+package com.example.android.finalproject.model.notification
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-/**
- * A basic class representing an entity that is a row in a one-column database table.
- *
- * @ Entity - You must annotate the class as an entity and supply a table name if not class name.
- * @ PrimaryKey - You must identify the primary key.
- * @ ColumnInfo - You must supply the column name if it is different from the variable name.
- *
- * See the documentation for the full rich set of annotations.
- * https://developer.android.com/topic/libraries/architecture/room.html
- */
 
 @Entity(tableName = "notification_table")
 data class Notification(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
-    val day_of_week: String,
-    val start_time: String,
+    val notiId: Int,
+
+    val hour: Int,
+    val minute: Int,
+
+    val time_created: Long,
+
+    var active: Boolean,
+
+    val sun: Boolean,
+    val mon: Boolean,
+    val tues: Boolean,
+    val wed: Boolean,
+    val thurs: Boolean,
+    val fri: Boolean,
+    val sat: Boolean,
+
     val weekly: Boolean,
+) {
 
-)
+    fun getRecurringDaysText(): String? {
+        if (!active) {
+            return null
+        }
 
+        var days = ""
+        if (sun) {
+            days += "Su"
+        }
+        if (mon) {
+            days += "M"
+        }
+        if (tues) {
+            days += "Tu"
+        }
+        if (wed) {
+            days += "We"
+        }
+        if (thurs) {
+            days += "Th"
+        }
+        if (fri) {
+            days += "F"
+        }
+        if (sat) {
+            days += "Sa"
+        }
+        val none = sun || mon || tues || wed || thurs || fri || sat
+        if (!none) {
+            days = "Today"
+        }
+        return days
+    }
+}

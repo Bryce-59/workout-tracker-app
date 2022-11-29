@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_workout"
-        android:name="com.example.android.finalproject.ui.WorkoutFragment"
+        android:name="com.example.android.finalproject.ui.workout.WorkoutFragment"
         android:label="@string/title_workout"
         tools:layout="@layout/fragment_workout" />
 
     <fragment
         android:id="@+id/navigation_notification"
-        android:name="com.example.android.finalproject.ui.NotificationFragment"
+        android:name="com.example.android.finalproject.ui.notification.NotificationFragment"
         android:label="Notifications"
         tools:layout="@layout/fragment_notification" />
 
     <fragment
         android:id="@+id/navigation_user"
-        android:name="com.example.android.finalproject.ui.UserFragment"
+        android:name="com.example.android.finalproject.ui.user.UserFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_user" />
 </navigation>

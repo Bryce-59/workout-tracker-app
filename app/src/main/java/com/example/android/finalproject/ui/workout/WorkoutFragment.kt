@@ -1,4 +1,4 @@
-package com.example.android.finalproject.ui
+package com.example.android.finalproject.ui.workout
 
 import android.app.Activity
 import android.content.Intent
@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.finalproject.*
 import com.example.android.finalproject.databinding.FragmentWorkoutBinding
 import com.example.android.finalproject.model.workout.Workout
-import com.example.android.finalproject.model.WorkoutsApplication
+import com.example.android.finalproject.WorkoutsApplication
+import com.example.android.finalproject.ui.notification.Video
 
 class WorkoutFragment : Fragment(), WordListAdapter.OnItemClickListener {
 

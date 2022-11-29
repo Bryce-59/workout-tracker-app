@@ -73,8 +73,6 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
                     .format(calendar.time)
                 userViewModel.getWorkoutToday(dateString).observe(viewLifecycleOwner){
                     workouts = it
-                    println(dateString)
-                    println(workouts)
                     bindWorkouts()
                 }
             }
@@ -89,15 +87,22 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
         binding.apply {
             var totalWorkoutTime = 0L
             var totalCalories = 0
+            var totalRunTime = 0L
             for (workout in workouts) {
                 val endTime = Time(workout.endTime)
                 val startTime = Time(workout.startTime)
                 totalWorkoutTime += endTime.difference(startTime)
                 totalCalories += workout.calories
+                if (workout.workoutName.contains("run")){
+                    totalRunTime += endTime.difference(startTime)
+                }
             }
             val hours = totalWorkoutTime / 3600
             val minutes = (totalWorkoutTime - hours * 3600) / 60
+            val runHours = totalRunTime / 3600
+            val runMins = (totalRunTime - runHours * 3600) / 60
             binding.workoutTimeText.text = "%02d:%02d".format(hours, minutes)
+            binding.runningTimeText.text = "%02d:%02d".format(runHours, runMins)
             binding.caloriesText.text = totalCalories.toString()
         }
     }

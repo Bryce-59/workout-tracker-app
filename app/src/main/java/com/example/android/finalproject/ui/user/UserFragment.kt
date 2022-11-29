@@ -91,12 +91,14 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
             var totalWorkoutTime = 0L
             var totalCalories = 0
             for (workout in workouts) {
-                val endTime = workout.endTime
-                val startTime = workout.startTime
-
+                val endTime = Time(workout.endTime)
+                val startTime = Time(workout.startTime)
+                totalWorkoutTime += endTime.difference(startTime)
                 totalCalories += workout.calories
             }
-            binding.workoutTimeText.text = ""
+            val hours = totalWorkoutTime / 3600
+            val minutes = (totalWorkoutTime - hours * 3600) / 60
+            binding.workoutTimeText.text = "%02d:%02d".format(hours, minutes)
             binding.caloriesText.text = totalCalories.toString()
         }
     }
@@ -158,5 +160,16 @@ class UserFragment : Fragment(), MeasurementDialog.MeasurementDialogListener {
     companion object{
         const val TYPE_CREATE = 1
         const val TYPE_UPDATE = 2
+
+        class Time(private val timeString: String) {
+            private val hour get() = timeString.split(":")[0].toInt()
+            private val minute get() = timeString.split(":")[1].toInt()
+
+            fun difference(other: Time): Int{
+                val endSeconds = hour * 3600 + minute * 60
+                val startSeconds = other.hour * 3600 + other.minute * 60
+                return endSeconds - startSeconds
+            }
+        }
     }
 }

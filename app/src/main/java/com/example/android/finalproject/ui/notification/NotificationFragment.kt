@@ -32,21 +32,18 @@ import com.example.android.finalproject.databinding.FragmentNotificationBinding
 import com.example.android.finalproject.model.notification.Notification
 import com.example.android.finalproject.model.notification.NotificationViewHolder
 import com.example.android.finalproject.model.notification.NotificationViewModel
-import com.example.android.finalproject.model.notification.alarm.OnToggleAlarmListener
-
 /**
  * Activity for entering a word.
  */
 
-class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListener,
-    OnToggleAlarmListener {
+class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
     private val newNotiActivityRequestCode = 1
     private lateinit var notificationViewModel: NotificationViewModel
 
-    private var adapter = NotificationListAdapter(this, this)
+    private var adapter = NotificationListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -104,25 +101,12 @@ class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListe
         val curNotification = viewHolder?.getNotification()
 
         if (view_code == 3 && curNotification != null){
-            this.context?.let { curNotification.cancelAlarm(it) }
             notificationViewModel.delete(curNotification)
             Toast.makeText(
                 this.context,
                 "Notification deleted",
                 Toast.LENGTH_LONG
             ).show()
-        }
-    }
-
-    override fun onToggle(alarm: Notification?) {
-        if (alarm != null) {
-            if (alarm.active) {
-                context?.let { alarm.cancelAlarm(it) }
-                notificationViewModel?.update(alarm)
-            } else {
-                context?.let { alarm.schedule(it) }
-                notificationViewModel?.update(alarm)
-            }
         }
     }
 }

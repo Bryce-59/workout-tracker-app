@@ -56,7 +56,6 @@ class NewNotificationActivity : AppCompatActivity() {
 
     private fun scheduleAlarm() {
         val timePicker: TimePicker? = findViewById(R.id.pickTime)
-        val recurring: CheckBox? = findViewById<CheckBox>(R.id.repeated)
         val sun: CheckBox? = findViewById<CheckBox>(R.id.sunday)
         val mon: CheckBox? = findViewById<CheckBox>(R.id.monday)
         val tue: CheckBox? = findViewById<CheckBox>(R.id.tuesday)
@@ -79,10 +78,9 @@ class NewNotificationActivity : AppCompatActivity() {
             thu!!.isChecked,
             fri!!.isChecked,
             sat!!.isChecked,
-            recurring!!.isChecked,
+            false,
         )
         createAlarmViewModel?.insert(notification)
-        notification.schedule(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -6,16 +6,12 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.finalproject.R
-import com.example.android.finalproject.WordListAdapter
-import com.example.android.finalproject.model.notification.alarm.OnToggleAlarmListener
 import java.lang.String
 
-class NotificationViewHolder(itemView: View, listener: OnToggleAlarmListener, nodeListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class NotificationViewHolder(itemView: View, nodeListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     private val deleteImage: ImageView = itemView.findViewById(R.id.delete)
     private val notificationTime: TextView
     private val notificationRecurring: ImageView
-    var notificationStarted: Switch
-    private val listener: OnToggleAlarmListener
     private val nodeListener: OnItemClickListener
     private var current_notification: Notification?
     private var notificationDates : TextView
@@ -23,10 +19,8 @@ class NotificationViewHolder(itemView: View, listener: OnToggleAlarmListener, no
     init {
         current_notification = null
         notificationTime = itemView.findViewById(R.id.notification_time)
-        notificationStarted = itemView.findViewById(R.id.is_active)
         notificationRecurring = itemView.findViewById(R.id.repeat_weekly)
         notificationDates = itemView.findViewById(R.id.days_active)
-        this.listener = listener
         this.nodeListener = nodeListener
     }
 
@@ -34,20 +28,9 @@ class NotificationViewHolder(itemView: View, listener: OnToggleAlarmListener, no
         current_notification = notification
         val notificationText = String.format("%02d:%02d", notification.hour, notification.minute)
         notificationTime.text = notificationText
-        notificationStarted.isChecked = notification.active
         notificationDates.text = notification.getRecurringDaysText()
-        if (notification.weekly) {
-            notificationRecurring.setImageResource(R.drawable.ic_repeat_black_24dp)
-        }
-
-
-
-        notificationStarted.setOnCheckedChangeListener { buttonView, isChecked ->
-            listener.onToggle(
-                notification
-            )
-        }
     }
+
 
     fun getNotification(): Notification? {
         return current_notification

@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.Flow
  */
 
 @Dao
-open interface NotificationDao {
+interface NotificationDao {
 
     // The flow always holds/caches latest version of data. Notifies its observers when the
     // data has changed.

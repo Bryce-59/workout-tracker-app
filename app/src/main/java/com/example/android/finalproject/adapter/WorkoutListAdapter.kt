@@ -65,7 +65,7 @@ class WordListAdapter(private val listener: OnItemClickListener) : ListAdapter<W
                     view_code = 0
                 }
             }
-            val position : Int = adapterPosition
+            val position : Int = bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION){
                 listener.onItemClick(position, view_code)
             }

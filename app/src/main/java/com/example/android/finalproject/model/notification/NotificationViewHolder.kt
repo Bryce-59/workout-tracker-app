@@ -6,7 +6,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.finalproject.R
-import java.lang.String
+
 
 class NotificationViewHolder(itemView: View, nodeListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
     private val deleteImage: ImageView = itemView.findViewById(R.id.delete)
@@ -43,7 +43,7 @@ class NotificationViewHolder(itemView: View, nodeListener: OnItemClickListener) 
                 view_code = 3
             }
         }
-        val position: Int = adapterPosition
+        val position: Int = bindingAdapterPosition
         if (position != RecyclerView.NO_POSITION) {
             nodeListener.onItemClick(position, view_code)
         }

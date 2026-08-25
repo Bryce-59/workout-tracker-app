@@ -26,7 +26,7 @@ package com.example.android.finalproject.ui.notification
 //import android.widget.*
 //import androidx.appcompat.app.AppCompatActivity
 //import androidx.lifecycle.Observer
-//import androidx.lifecycle.ViewModelProviders
+//import androidx.lifecycle.ViewModelProvider
 //import androidx.lifecycle.observe
 //import androidx.recyclerview.widget.LinearLayoutManager
 //import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +53,7 @@ package com.example.android.finalproject.ui.notification
 //        super.onCreate(savedInstanceState)
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //
-//        notificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
+//        notificationViewModel = ViewModelProvider(this).get(NotificationViewModel::class.java)
 //        notificationViewModel.getAlarmsLiveData()?.observe(this,
 //            Observer<List<Any?>?> { alarms ->
 //                if (alarms != null) {

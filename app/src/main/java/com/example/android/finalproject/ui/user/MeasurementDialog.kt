@@ -42,7 +42,7 @@ class MeasurementDialog(private val type: Int) : DialogFragment() {
             val dialogView = inflater.inflate(R.layout.dialog_measurement_data, null)
             builder
                 .setView(dialogView)
-                .setPositiveButton("Save") { dialog, id ->
+                .setPositiveButton("Save") { _, _ ->
                     listener.onDialogPositiveClick(this, dialogView, type)
                 }
                 .setNegativeButton("Cancel") { _, _ ->

@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.finalproject.*
 import com.example.android.finalproject.databinding.FragmentNotificationBinding
@@ -68,7 +68,7 @@ class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListe
         val recyclerView = binding.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        notificationViewModel = ViewModelProviders.of(this)[NotificationViewModel::class.java]
+        notificationViewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
         notificationViewModel.getAlarmsLiveData()?.observe(viewLifecycleOwner,
             Observer<List<Any?>?> { alarms ->
                 if (alarms != null) {
@@ -98,7 +98,7 @@ class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListe
         val recyclerView = binding.recyclerview
         var viewHolder: NotificationViewHolder =
             recyclerView.findViewHolderForAdapterPosition(position) as NotificationViewHolder;
-        val curNotification = viewHolder?.getNotification()
+        val curNotification = viewHolder.getNotification()
 
         if (view_code == 3 && curNotification != null){
             notificationViewModel.delete(curNotification)

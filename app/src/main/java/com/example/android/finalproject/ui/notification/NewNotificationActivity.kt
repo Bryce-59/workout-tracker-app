@@ -26,8 +26,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
-import butterknife.BindView
+import androidx.lifecycle.ViewModelProvider
 import com.example.android.finalproject.R
 import com.example.android.finalproject.model.notification.Notification
 import com.example.android.finalproject.model.notification.NotificationViewModel
@@ -41,13 +40,13 @@ class NewNotificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_notification)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        createAlarmViewModel = ViewModelProviders.of(this).get(
+        createAlarmViewModel = ViewModelProvider(this).get(
             NotificationViewModel::class.java
         )
 
         val scheduleAlarm: Button? = findViewById(R.id.saveButton)
 
-        scheduleAlarm!!.setOnClickListener { v ->
+        scheduleAlarm!!.setOnClickListener { _ ->
 
             scheduleAlarm()
             finish()
@@ -68,7 +67,7 @@ class NewNotificationActivity : AppCompatActivity() {
         val notification = Notification(
             notiId,
             timePicker!!.hour,
-            timePicker!!.minute,
+            timePicker.minute,
             System.currentTimeMillis(),
             true,
             sun!!.isChecked,

@@ -23,15 +23,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.android.finalproject.*
 import com.example.android.finalproject.databinding.FragmentNotificationBinding
-import com.example.android.finalproject.model.notification.Notification
 import com.example.android.finalproject.model.notification.NotificationViewHolder
 import com.example.android.finalproject.model.notification.NotificationViewModel
+import com.example.android.finalproject.NotificationListAdapter
+
 /**
  * Activity for entering a word.
  */
@@ -40,16 +40,28 @@ class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListe
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
-    private val newNotiActivityRequestCode = 1
     private lateinit var notificationViewModel: NotificationViewModel
 
     private var adapter = NotificationListAdapter(this)
+
+    private val newNotificationLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode != Activity.RESULT_OK) {
+                Toast.makeText(
+                    requireContext(),
+                    "Notification cancelled",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -58,49 +70,37 @@ class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListe
         super.onViewCreated(view, savedInstanceState)
 
         binding.fab.setOnClickListener {
-            val intent = Intent(this@NotificationFragment.context, NewNotificationActivity::class.java)
-            startActivityForResult(intent, newNotiActivityRequestCode)
+            val intent = Intent(
+                this@NotificationFragment.context,
+                NewNotificationActivity::class.java
+            )
+            newNotificationLauncher.launch(intent)
         }
 
-        // Add an observer on the LiveData returned by getAlphabetizedWords.
-        // The onChanged() method fires when the observed data changes and the activity is
+        // Add an observer on the LiveData returned by getAlarmsLiveData().
+        // The observer fires when the observed data changes and the fragment is
         // in the foreground.
         val recyclerView = binding.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        notificationViewModel = ViewModelProvider(this)[NotificationViewModel::class.java]
-        notificationViewModel.getAlarmsLiveData()?.observe(viewLifecycleOwner,
-            Observer<List<Any?>?> { alarms ->
-                if (alarms != null) {
-                    adapter.setAlarms(alarms as List<Notification?>)
-                }
-            })
-    }
 
-    companion object {
-        const val EXTRA_REPLY = "com.example.android.notificationListsql.REPLY"
-        const val SEARCH_REPLY = "SEARCH.NOTIFICATION"
-    }
+        notificationViewModel =
+            ViewModelProvider(this)[NotificationViewModel::class.java]
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intentData)
-
-        if (requestCode != newNotiActivityRequestCode || resultCode != Activity.RESULT_OK) {
-            Toast.makeText(
-                this.context,
-                "Notification cancelled",
-                Toast.LENGTH_LONG
-            ).show()
+        notificationViewModel.getAlarmsLiveData()?.observe(viewLifecycleOwner) { alarms ->
+            if (alarms != null) {
+                adapter.setAlarms(alarms)
+            }
         }
     }
 
     override fun onItemClick(position: Int, view_code: Int) {
         val recyclerView = binding.recyclerview
-        var viewHolder: NotificationViewHolder =
-            recyclerView.findViewHolderForAdapterPosition(position) as NotificationViewHolder;
-        val curNotification = viewHolder.getNotification()
+        val viewHolder =
+            recyclerView.findViewHolderForAdapterPosition(position) as? NotificationViewHolder
+        val curNotification = viewHolder?.getNotification()
 
-        if (view_code == 3 && curNotification != null){
+        if (view_code == 3 && curNotification != null) {
             notificationViewModel.delete(curNotification)
             Toast.makeText(
                 this.context,
@@ -108,5 +108,10 @@ class NotificationFragment : Fragment(), NotificationViewHolder.OnItemClickListe
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
